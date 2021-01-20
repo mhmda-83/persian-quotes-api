@@ -6,6 +6,7 @@ import { Logger } from '../infra/logger';
 interface Config {
   botToken: string;
   port: number;
+  webhookPath: string;
 }
 
 function overrideEnv(
@@ -30,6 +31,7 @@ function getConfig(): Config {
   return {
     botToken: getEnv('BOT_TOKEN'),
     port: Number.parseInt(getEnv('PORT'), 10),
+    webhookPath: getEnv('WEBHOOK_PATH'),
   };
 }
 export { Config, getConfig, Logger };
