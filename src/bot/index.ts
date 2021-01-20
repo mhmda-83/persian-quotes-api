@@ -4,7 +4,7 @@ interface BotConfig {
   botToken: string;
 }
 
-function createBot(botConfig: BotConfig) {
+function createTelegrafBot(botConfig: BotConfig) {
   const bot: Telegraf = new Telegraf(botConfig.botToken);
 
   bot.start((ctx) => ctx.reply('Welcome'));
@@ -12,4 +12,4 @@ function createBot(botConfig: BotConfig) {
   return bot;
 }
 
-export { createBot };
+export { createTelegrafBot };
