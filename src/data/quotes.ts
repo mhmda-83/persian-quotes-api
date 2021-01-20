@@ -1,4 +1,4 @@
-import { Quote } from '../quotes/model';
+import { Quote } from '../model/quote';
 
 const quotes: Quote[] = [
   {

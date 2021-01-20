@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 
-import { Category } from '../categories/model';
-import { Quote } from '../quotes/model';
+import { Category } from '../model/category';
+import { Quote } from '../model/quote';
 
 interface QuotableQuote {
   author: string;
