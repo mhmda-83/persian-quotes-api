@@ -13,15 +13,15 @@ function overrideEnv(
   dotenvOptions: DotenvConfigOptions = {},
 ) {
   const overrideEnvFile = fs.readFileSync(overridePath);
-  const overrideEnvValuees = dotenv.parse(overrideEnvFile);
+  const overrideEnvValues = dotenv.parse(overrideEnvFile);
 
   dotenv.config(dotenvOptions);
-  process.env = { ...process.env, ...overrideEnvValuees };
+  process.env = { ...process.env, ...overrideEnvValues };
 }
 
 function getEnv(envName: string, defaultEnv?: string): string {
   const env = process.env[envName] ?? defaultEnv;
-  if (env == null) throw Error(`undefined envirement varible: ${envName}`);
+  if (env == null) throw Error(`undefined environment variable: ${envName}`);
   return env;
 }
 

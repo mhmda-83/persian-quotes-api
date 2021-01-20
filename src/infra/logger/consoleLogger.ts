@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { Logger } from './logger';
 
-class ConsoleLoger implements Logger {
+class ConsoleLogger implements Logger {
   public log(...args: any[]) {
     console.log(...args);
   }
@@ -15,4 +15,4 @@ class ConsoleLoger implements Logger {
   }
 }
 
-export { ConsoleLoger };
+export { ConsoleLogger };
