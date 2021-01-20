@@ -15,6 +15,7 @@
     "@commitlint/config-conventional": "11.0.0",
     "@fullstacksjs/eslint-config": "4.2.1",
     "@types/dotenv": "8.2.0",
+    "@types/express": "4.17.11",
     "@types/node": "14.14.22",
     "@typescript-eslint/eslint-plugin": "4.14.0",
     "@typescript-eslint/parser": "4.14.0",
