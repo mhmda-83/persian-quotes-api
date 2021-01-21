@@ -1,9 +1,11 @@
+import crypto from 'crypto';
 import dotenv, { DotenvConfigOptions } from 'dotenv';
 import fs from 'fs';
 
 import { Logger } from '../infra/logger';
 
 interface Config {
+  isProduction: boolean;
   botToken: string;
   port: number;
   webhookPath: string;
@@ -29,9 +31,10 @@ function getEnv(envName: string, defaultEnv?: string): string {
 function getConfig(): Config {
   overrideEnv('.env.local');
   return {
+    isProduction: getEnv('NODE_ENV') === 'production',
     botToken: getEnv('BOT_TOKEN'),
     port: Number.parseInt(getEnv('PORT'), 10),
-    webhookPath: getEnv('WEBHOOK_PATH'),
+    webhookPath: crypto.randomBytes(16).toString('hex'),
   };
 }
 export { Config, getConfig, Logger };

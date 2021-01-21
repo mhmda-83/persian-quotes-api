@@ -7,4 +7,6 @@ const config = getConfig();
 const app: Express = express();
 
 const bot = createTelegrafBot(config);
-app.use(bot.webhookCallback(config.webhookPath));
+
+if (config.isProduction) app.use(bot.webhookCallback(config.webhookPath));
+else bot.launch();
