@@ -6,7 +6,7 @@ import { Quote } from '../model/quote';
 interface QuotableQuote {
   author: string;
   text: string;
-  tags: [string];
+  tags: string[];
 }
 
 class QuoteApi {
