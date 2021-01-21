@@ -1,7 +1,9 @@
-import { Context } from 'telegraf';
+import { Middleware } from 'telegraf-ts';
 
-function translateHandler(ctx: Context) {
-  ctx.reply('translate command');
-}
+import { Context } from '../../infra/bot/context';
+
+const translateHandler: Middleware<Context> = (ctx) => {
+  ctx.logger.log('logged');
+};
 
 export { translateHandler };
