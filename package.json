@@ -6,6 +6,7 @@
   "author": "Mohammad MohammadAlian <mralian.dev@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "dev": "nodemon src/app.ts",
     "lint": "eslint \"./**/*.{ts,js}\"",
     "lint:fix": "eslint \"./**/*.{ts,js}\" --quiet --fix",
     "format": "prettier --write \"./**/*.{ts,js,json}\"",
