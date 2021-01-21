@@ -1,14 +1,16 @@
-import { Telegraf } from 'telegraf';
+import { Context, session, Telegraf } from 'telegraf';
 
-interface BotConfig {
-  botToken: string;
-}
+import { handlersComposer } from '../botHandlers';
 
-function createTelegrafBot(botConfig: BotConfig) {
-  const bot: Telegraf = new Telegraf(botConfig.botToken);
+function createTelegrafBot(
+  botToken: string,
+  options: Partial<Telegraf.Options<Context>>,
+) {
+  const bot: Telegraf = new Telegraf(botToken, options);
 
+  bot.use(session());
   bot.start((ctx) => ctx.reply('Welcome'));
-
+  bot.use(handlersComposer);
   return bot;
 }
 
