@@ -6,6 +6,7 @@
   "author": "Mohammad MohammadAlian <mralian.dev@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "dev": "nodemon src/app.ts",
     "lint": "eslint \"./**/*.{ts,js}\"",
     "lint:fix": "eslint \"./**/*.{ts,js}\" --quiet --fix",
     "format": "prettier --write \"./**/*.{ts,js,json}\"",
@@ -37,6 +38,6 @@
     "dotenv": "8.2.0",
     "express": "4.17.1",
     "mongoose": "5.11.13",
-    "telegraf": "4.0.1"
+    "telegraf-ts": "3.89.1"
   }
 }
