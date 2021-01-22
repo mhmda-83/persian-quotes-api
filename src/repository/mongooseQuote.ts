@@ -1,7 +1,7 @@
 import MongooseQuoteModel, {
   MongooseQuoteDoc,
 } from '../model/mongooseQuoteModel';
-import { Quote } from '../model/quote';
+import { TranslatedQuote } from '../model/translatedQuote';
 import QuoteRepo from './quote';
 
 class MongooseQuoteRepo implements QuoteRepo {
@@ -82,7 +82,7 @@ class MongooseQuoteRepo implements QuoteRepo {
     return quote;
   }
 
-  public async insertOne(quote: { original: Quote; translated: Quote }) {
+  public async insertOne(quote: TranslatedQuote) {
     const insertedQuote = await MongooseQuoteModel.create(quote);
 
     return insertedQuote;

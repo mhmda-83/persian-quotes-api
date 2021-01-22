@@ -1,12 +1,9 @@
 import mongoose, { Document } from 'mongoose';
 
 import schema from './mongooseQuoteSchema';
-import { Quote } from './quote';
+import { TranslatedQuote } from './translatedQuote';
 
-export interface MongooseQuoteDoc extends Document {
-  original: Quote;
-  translated: Quote;
-}
+export interface MongooseQuoteDoc extends TranslatedQuote, Document {}
 
 const model = mongoose.model<MongooseQuoteDoc>('quote', schema);
 

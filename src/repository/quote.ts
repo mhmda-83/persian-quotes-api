@@ -1,39 +1,26 @@
 import { MongooseQuoteDoc } from '../model/mongooseQuoteModel';
-import { Quote } from '../model/quote';
+import { TranslatedQuote } from '../model/translatedQuote';
 
 interface QuoteRepo {
-  getAll: () => Promise<{ original: Quote; translated: Quote }[] | null>;
+  getAll: () => Promise<TranslatedQuote[] | null>;
 
-  getById: (
-    id: string,
-  ) => Promise<{ original: Quote; translated: Quote } | null>;
+  getById: (id: string) => Promise<TranslatedQuote | null>;
 
-  getRandom: () => Promise<{ original: Quote; translated: Quote } | null>;
+  getRandom: () => Promise<TranslatedQuote | null>;
 
   getCategories: () => Promise<string[] | null>;
 
-  getByCategory: (
-    category: string,
-  ) => Promise<{ original: Quote; translated: Quote }[] | null>;
+  getByCategory: (category: string) => Promise<TranslatedQuote[] | null>;
 
-  getRandomByCategory: (
-    category: string,
-  ) => Promise<{ original: Quote; translated: Quote } | null>;
+  getRandomByCategory: (category: string) => Promise<TranslatedQuote | null>;
 
   getAuthors: () => Promise<string[] | null>;
 
-  getByAuthor: (
-    author: string,
-  ) => Promise<{ original: Quote; translated: Quote }[] | null>;
+  getByAuthor: (author: string) => Promise<TranslatedQuote[] | null>;
 
-  getRandomByAuthor: (
-    author: string,
-  ) => Promise<{ original: Quote; translated: Quote } | null>;
+  getRandomByAuthor: (author: string) => Promise<TranslatedQuote | null>;
 
-  insertOne: (quote: {
-    original: Quote;
-    translated: Quote;
-  }) => Promise<MongooseQuoteDoc | null>;
+  insertOne: (quote: TranslatedQuote) => Promise<MongooseQuoteDoc | null>;
 }
 
 export default QuoteRepo;
