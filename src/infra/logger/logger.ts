@@ -1,4 +1,4 @@
-abstract class Logger {
+interface Logger {
   log: (...args: any[]) => void;
   info: (...args: any[]) => void;
   warn: (...args: any[]) => void;
