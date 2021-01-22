@@ -5,6 +5,12 @@ import { Quote } from '../model/quote';
 import QuoteRepo from './quote';
 
 class MongooseQuoteRepo implements QuoteRepo {
+  public async getAll() {
+    const quotes = await MongooseQuoteModel.find();
+
+    return quotes;
+  }
+
   public async getById(id: string) {
     const quote = await MongooseQuoteModel.findById(id);
     return quote;

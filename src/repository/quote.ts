@@ -2,6 +2,8 @@ import { MongooseQuoteDoc } from '../model/mongooseQuoteModel';
 import { Quote } from '../model/quote';
 
 interface QuoteRepo {
+  getAll: () => Promise<{ original: Quote; translated: Quote }[] | null>;
+
   getById: (
     id: string,
   ) => Promise<{ original: Quote; translated: Quote } | null>;
