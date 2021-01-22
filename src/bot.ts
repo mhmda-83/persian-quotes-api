@@ -4,6 +4,7 @@ import { TelegrafOptions } from 'telegraf-ts/typings/telegraf';
 import { handlersComposer } from './botHandlers';
 import { Logger } from './config';
 import { Actions, Context } from './infra/bot/context';
+import QuoteApi from './services/quoteApi';
 
 function createTelegrafBot(
   botToken: string,
@@ -11,7 +12,10 @@ function createTelegrafBot(
   options?: TelegrafOptions,
 ) {
   const bot: Telegraf<Context> = new Telegraf<Context>(botToken, options);
+
   bot.context.logger = logger;
+  bot.context.quoteService = new QuoteApi();
+
   bot.use(session());
   bot.use((ctx, next) => {
     ctx.session.action = Actions.NONE;
