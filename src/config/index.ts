@@ -17,6 +17,7 @@ interface Config {
   webhookPath: string;
   adminsIds: string[];
   redisUrl: RedisUrlParts;
+  databaseUrl: string;
 }
 
 function overrideEnv(
@@ -50,6 +51,7 @@ function getConfig(): Config {
       host: getEnv('REDIS_HOST'),
     },
     adminsIds: getEnv('ADMINS_CHAT_IDS').split(','),
+    databaseUrl: getEnv('DATABASE_URL'),
   };
 }
 export { Config, getConfig, Logger, RedisUrlParts };
