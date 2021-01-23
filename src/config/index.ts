@@ -9,6 +9,7 @@ interface Config {
   botToken: string;
   port: number;
   webhookPath: string;
+  databaseUrl: string;
 }
 
 function overrideEnv(
@@ -35,6 +36,7 @@ function getConfig(): Config {
     botToken: getEnv('BOT_TOKEN'),
     port: Number.parseInt(getEnv('PORT'), 10),
     webhookPath: crypto.randomBytes(16).toString('hex'),
+    databaseUrl: getEnv('DATABASE_URL'),
   };
 }
 export { Config, getConfig, Logger };
