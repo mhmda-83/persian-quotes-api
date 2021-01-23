@@ -4,7 +4,8 @@ import { TelegrafOptions } from 'telegraf-ts/typings/telegraf';
 
 import { handlersComposer } from './botHandlers';
 import { Logger, RedisUrlParts } from './config';
-import { Actions, Context } from './infra/bot/context';
+import { TranslationActions } from './data/botActions';
+import { Context } from './infra/bot/context';
 import { QuoteApi } from './services/quoteApi';
 
 interface BotConfig {
@@ -29,7 +30,7 @@ function createTelegrafBot(
   bot.use(redisSession);
 
   bot.start((ctx: Context) => {
-    ctx.session.action = Actions.NONE;
+    ctx.session.action = TranslationActions.NONE;
   });
   bot.use(handlersComposer);
   return bot;
