@@ -44,7 +44,7 @@ class MongooseQuoteRepo implements QuoteRepo {
   }
 
   public async getCategoriesCount() {
-    const categories = await this.getCategories({});
+    const categories = await this.getCategories();
 
     return categories.length;
   }
@@ -76,7 +76,7 @@ class MongooseQuoteRepo implements QuoteRepo {
   }
 
   public async getAuthorsCount() {
-    const authors = await this.getAuthors({});
+    const authors = await this.getAuthors();
 
     return authors.length;
   }
