@@ -1,8 +1,14 @@
 import { MongooseQuoteDoc } from '../model/mongooseQuoteModel';
 import { TranslatedQuote } from '../model/translatedQuote';
 
+export interface QueryOptions {
+  limit?: number;
+  skip?: number;
+}
 interface QuoteRepo {
-  getAll: () => Promise<TranslatedQuote[] | null>;
+  getAll: (options: QueryOptions) => Promise<TranslatedQuote[] | null>;
+
+  getCount: () => Promise<number>;
 
   getById: (id: string) => Promise<TranslatedQuote | null>;
 
@@ -10,13 +16,23 @@ interface QuoteRepo {
 
   getCategories: () => Promise<string[] | null>;
 
-  getByCategory: (category: string) => Promise<TranslatedQuote[] | null>;
+  getCategoriesCount: () => Promise<number>;
+
+  getByCategory: (
+    category: string,
+    options: QueryOptions,
+  ) => Promise<TranslatedQuote[] | null>;
 
   getRandomByCategory: (category: string) => Promise<TranslatedQuote | null>;
 
   getAuthors: () => Promise<string[] | null>;
 
-  getByAuthor: (author: string) => Promise<TranslatedQuote[] | null>;
+  getAuthorsCount: () => Promise<number>;
+
+  getByAuthor: (
+    author: string,
+    options: QueryOptions,
+  ) => Promise<TranslatedQuote[] | null>;
 
   getRandomByAuthor: (author: string) => Promise<TranslatedQuote | null>;
 

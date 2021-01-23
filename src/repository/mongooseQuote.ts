@@ -2,13 +2,19 @@ import MongooseQuoteModel, {
   MongooseQuoteDoc,
 } from '../model/mongooseQuoteModel';
 import { TranslatedQuote } from '../model/translatedQuote';
-import QuoteRepo from './quote';
+import QuoteRepo, { QueryOptions } from './quote';
 
 class MongooseQuoteRepo implements QuoteRepo {
-  public async getAll() {
-    const quotes = await MongooseQuoteModel.find();
+  public async getAll(options: QueryOptions) {
+    const quotes = await MongooseQuoteModel.find().setOptions(options);
 
     return quotes;
+  }
+
+  public async getCount() {
+    const count = await MongooseQuoteModel.countDocuments();
+
+    return count;
   }
 
   public async getById(id: string) {
@@ -37,10 +43,16 @@ class MongooseQuoteRepo implements QuoteRepo {
     return categories;
   }
 
-  public async getByCategory(category: string) {
+  public async getCategoriesCount() {
+    const categories = await this.getCategories({});
+
+    return categories.length;
+  }
+
+  public async getByCategory(category: string, options: QueryOptions) {
     const quotes = await MongooseQuoteModel.find({
       'translated.categories': category,
-    });
+    }).setOptions(options);
 
     return quotes;
   }
@@ -63,10 +75,16 @@ class MongooseQuoteRepo implements QuoteRepo {
     return authors;
   }
 
-  public async getByAuthor(author: string) {
+  public async getAuthorsCount() {
+    const authors = await this.getAuthors({});
+
+    return authors.length;
+  }
+
+  public async getByAuthor(author: string, options: QueryOptions) {
     const quotes = await MongooseQuoteModel.find({
       'translated.author': author,
-    });
+    }).setOptions(options);
 
     return quotes;
   }
