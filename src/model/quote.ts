@@ -3,7 +3,3 @@ export interface Quote {
   categories: string[];
   author: string;
 }
-
-export interface QuoteViewModel extends Quote {
-  toMarkdown: () => string;
-}
