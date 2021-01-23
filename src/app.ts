@@ -12,7 +12,10 @@ const logger = new ConsoleLogger();
 
 const app: Express = express();
 
-const bot = createTelegrafBot(config.botToken, logger);
+const bot = createTelegrafBot({
+  logger,
+  ...config,
+});
 if (config.isProduction) app.use(bot.webhookCallback(config.webhookPath));
 else
   bot
