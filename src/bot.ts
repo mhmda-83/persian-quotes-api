@@ -17,11 +17,10 @@ function createTelegrafBot(
   bot.context.quoteService = new QuoteApi();
 
   bot.use(session());
-  bot.use((ctx, next) => {
+
+  bot.start((ctx: Context) => {
     ctx.session.action = Actions.NONE;
-    next();
   });
-  bot.start((ctx: Context) => ctx.reply(ctx.session.action));
   bot.use(handlersComposer);
   return bot;
 }
