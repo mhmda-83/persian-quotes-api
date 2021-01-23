@@ -1,28 +1,28 @@
 import { Markup, Middleware } from 'telegraf-ts';
 
-import { Actions } from '../../data/botActions';
+import { TranslationActions } from '../../data/botActions';
 import { Context } from '../../infra/bot/context';
 import { QuoteApiQuote } from '../../services/quoteApi';
 import { QuoteMap } from '../../viewModel/quoteMap';
 
 const translateHandler: Middleware<Context> = async (ctx) => {
   switch (ctx.session.action) {
-    case Actions.TEXT:
+    case TranslationActions.TEXT:
       ctx.session.translatedQuote.text = ctx.message?.text;
-      ctx.session.action = Actions.AUTHOR;
+      ctx.session.action = TranslationActions.AUTHOR;
       ctx.reply('now send me the author in persian');
       break;
-    case Actions.AUTHOR:
+    case TranslationActions.AUTHOR:
       ctx.session.translatedQuote.author = ctx.message?.text;
-      ctx.session.action = Actions.CATEGORIES;
+      ctx.session.action = TranslationActions.CATEGORIES;
       ctx.reply(
         'now send me the categories in persian (each separated by space)',
       );
       break;
-    case Actions.CATEGORIES:
+    case TranslationActions.CATEGORIES:
       {
         ctx.session.translatedQuote.categories = ctx.message?.text?.split(' ');
-        ctx.session.action = Actions.NONE;
+        ctx.session.action = TranslationActions.NONE;
         ctx.reply(
           'thanks a lot for your contribution ♥\nwe will notify you when it gets verified',
         );
