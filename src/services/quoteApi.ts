@@ -4,7 +4,7 @@ import { Quote } from '../model/quote';
 
 interface QuotableQuote {
   author: string;
-  text: string;
+  content: string;
   tags: string[];
 }
 
@@ -18,11 +18,11 @@ class QuoteApi {
   async getRandomQuote(): Promise<Quote> {
     const response = await this.http.get<QuotableQuote>('/random');
 
-    const { author, text, tags } = response.data;
+    const { author, content, tags } = response.data;
 
     const quote: Quote = {
       author,
-      text,
+      text: content,
       categories: tags,
     };
 

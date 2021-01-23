@@ -16,3 +16,5 @@ else bot.launch();
 app.use('/api/v1/quote', quoteRouter);
 app.use('/api/v1/category', categoryRouter);
 app.use('/api/v1/author', authorRouter);
+
+export default app;
