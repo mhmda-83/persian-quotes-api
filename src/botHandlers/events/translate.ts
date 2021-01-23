@@ -1,6 +1,7 @@
 import { Markup, Middleware } from 'telegraf-ts';
 
-import { Actions, Context } from '../../infra/bot/context';
+import { Actions } from '../../data/botActions';
+import { Context } from '../../infra/bot/context';
 import { QuoteApiQuote } from '../../services/quoteApi';
 import { QuoteMap } from '../../viewModel/quoteMap';
 

@@ -17,4 +17,4 @@ interface Context extends TelegrafContext {
   adminsIds: string[];
 }
 
-export { Actions, Context };
+export { Context };
