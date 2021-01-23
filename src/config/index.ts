@@ -24,9 +24,12 @@ function overrideEnv(
   overridePath: string,
   dotenvOptions: DotenvConfigOptions = {},
 ) {
-  const overrideEnvFile = fs.readFileSync(overridePath);
-  const overrideEnvValues = dotenv.parse(overrideEnvFile);
+  const overrideFileExist = fs.existsSync(overridePath);
 
+  const overrideEnvFile = overrideFileExist
+    ? fs.readFileSync(overridePath)
+    : '';
+  const overrideEnvValues = dotenv.parse(overrideEnvFile);
   dotenv.config(dotenvOptions);
   process.env = { ...process.env, ...overrideEnvValues };
 }
@@ -38,7 +41,7 @@ function getEnv(envName: string, defaultEnv?: string): string {
 }
 
 function getConfig(): Config {
-  overrideEnv('.env.local');
+  overrideEnv('.env.locals');
   return {
     isProduction: getEnv('NODE_ENV') === 'production',
     botToken: getEnv('BOT_TOKEN'),
