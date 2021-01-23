@@ -1,10 +1,10 @@
-import { Middleware } from 'telegraf-ts';
+import { Markup, Middleware } from 'telegraf-ts';
 
 import { Actions, Context } from '../../infra/bot/context';
+import { QuoteApiQuote } from '../../services/quoteApi';
+import { QuoteMap } from '../../viewModel/quoteMap';
 
-const translateHandler: Middleware<Context> = (ctx) => {
-  ctx.logger.log(ctx.chat?.id);
-
+const translateHandler: Middleware<Context> = async (ctx) => {
   switch (ctx.session.action) {
     case Actions.TEXT:
       ctx.session.translatedQuote.text = ctx.message?.text;
@@ -19,11 +19,32 @@ const translateHandler: Middleware<Context> = (ctx) => {
       );
       break;
     case Actions.CATEGORIES:
-      ctx.session.translatedQuote.categories = ctx.message?.text?.split(' ');
-      ctx.session.action = Actions.NONE;
-      ctx.reply(
-        'thanks a lot for your contribution ♥\nwe will notify you when it gets verified',
-      );
+      {
+        ctx.session.translatedQuote.categories = ctx.message?.text?.split(' ');
+        ctx.session.action = Actions.NONE;
+        ctx.reply(
+          'thanks a lot for your contribution ♥\nwe will notify you when it gets verified',
+        );
+        const { currentQuoteId } = ctx.session;
+        const quote: QuoteApiQuote = await ctx.quoteService.getById(
+          currentQuoteId,
+        );
+
+        ctx.adminsIds.forEach((id) => {
+          ctx.telegram.sendMessage(
+            id,
+            `${QuoteMap.toView(quote)}\n` +
+              `ترجمه شد به\n\n` +
+              `${QuoteMap.toView(ctx.session.translatedQuote)}`,
+            {
+              reply_markup: Markup.inlineKeyboard([
+                Markup.callbackButton('✅', 'verified'),
+                Markup.callbackButton('❌', 'declined'),
+              ]).resize(),
+            },
+          );
+        });
+      }
       break;
 
     default:
