@@ -9,3 +9,11 @@ export const getAll = async (req: Request, res: Response) => {
 
   res.json({ categories, totalCount: categories.length });
 };
+
+export const getRandom = async (req: Request, res: Response) => {
+  const quote = await MongooseQuoteRepo.getRandomByCategory(
+    req.params.categoryName,
+  );
+
+  res.json({ quote });
+};

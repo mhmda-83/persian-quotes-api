@@ -9,3 +9,11 @@ export const getAll = async (req: Request, res: Response) => {
 
   res.json({ authors, totalCount: authors.length });
 };
+
+export const getRandom = async (req: Request, res: Response) => {
+  const quote = await MongooseQuoteRepo.getRandomByAuthor(
+    req.params.authorName,
+  );
+
+  res.json({ quote });
+};
