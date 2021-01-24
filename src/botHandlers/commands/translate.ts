@@ -1,6 +1,6 @@
 import { Middleware } from 'telegraf-ts';
 
-import { TranslationActions } from '../../data/botActions';
+import { TranslationProgressState } from '../../data/botActions';
 import { Context } from '../../infra/bot/context';
 import { QuoteApiQuote } from '../../services/quoteApi';
 import { QuoteMap } from '../../viewModel/quoteMap';
@@ -9,7 +9,7 @@ const translateHandler: Middleware<Context> = async (ctx) => {
   const randomQuote: QuoteApiQuote = await ctx.quoteService.getRandomQuote();
 
   ctx.session.currentQuoteId = randomQuote.id;
-  ctx.session.action = TranslationActions.TEXT;
+  ctx.session.state = TranslationProgressState.TEXT;
   ctx.session.translatedQuote = {};
 
   await ctx.reply(QuoteMap.toView(randomQuote));

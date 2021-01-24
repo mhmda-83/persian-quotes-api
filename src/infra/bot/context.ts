@@ -1,12 +1,15 @@
 import { TelegrafContext } from 'telegraf-ts';
 
-import { TranslationActions } from '../../data/botActions';
+import {
+  TranslationProgressState,
+  TranslationState,
+} from '../../data/botActions';
 import { Quote } from '../../model/quote';
 import { QuoteApi } from '../../services/quoteApi';
 import { Logger } from '../logger';
 
 interface CustomSession {
-  action: TranslationActions;
+  state: TranslationProgressState | TranslationState;
   translatedQuote: Partial<Quote>;
   currentQuoteId: string;
 }

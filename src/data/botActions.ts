@@ -1,8 +1,13 @@
-enum TranslationActions {
+enum TranslationProgressState {
   NONE = 'NONE',
   TEXT = 'TEXT',
   AUTHOR = 'AUTHOR',
   CATEGORIES = 'CATEGORIES',
 }
 
-export { TranslationActions };
+enum TranslationState {
+  VERIFIED = 'VERIFIED',
+  DECLINED = 'DECLINED',
+}
+
+export { TranslationProgressState, TranslationState };
