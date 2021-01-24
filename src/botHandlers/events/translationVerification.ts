@@ -2,22 +2,19 @@ import { Middleware } from 'telegraf-ts';
 
 import { TranslationState } from '../../data/botStates';
 import { Context } from '../../infra/bot/context';
-import { Quote } from '../../model/quote';
-import { TranslatedQuote } from '../../model/translatedQuote';
-import { QuoteApiQuote } from '../../services/quoteApi';
 
 const translationVerification: Middleware<Context> = async (ctx) => {
-  if (ctx.callbackQuery?.data === TranslationState.VERIFIED) {
-    const currentQuoteId = ctx.session?.currentQuoteId;
-    const originalQuote: QuoteApiQuote = await ctx.quoteService.getById(
-      currentQuoteId as string,
-    );
-    const userTranslatedQuote = ctx.session?.translatedQuote as Quote;
-    const quote: TranslatedQuote = {
-      original: originalQuote,
-      translated: userTranslatedQuote,
-    };
-    ctx.repo.insertOne(quote);
+  const data = ctx.callbackQuery?.data;
+  if (data != null) {
+    const [state, docId] = data.split('-');
+    if (state === TranslationState.VERIFIED) {
+      await ctx.repo.updateVerificationById(docId, true);
+      ctx.reply('saved successfully 🎉');
+    } else if (state === TranslationState.DECLINED) {
+      const isRemoved = await ctx.repo.removeById(docId);
+      if (isRemoved) ctx.reply('removed from the database successfully 🎉');
+      else ctx.reply('it seems something went wrong while trying to delete 🤔');
+    }
   }
   ctx.session = null;
 };
