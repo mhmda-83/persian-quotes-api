@@ -11,6 +11,7 @@ const schema = new mongoose.Schema({
     author: { type: String, required: true },
     categories: { type: [String], required: true },
   },
+  verified: { type: String, required: true },
 });
 
 export default schema;
