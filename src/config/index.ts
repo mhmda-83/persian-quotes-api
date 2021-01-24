@@ -41,7 +41,7 @@ function getEnv(envName: string, defaultEnv?: string): string {
 }
 
 function getConfig(): Config {
-  overrideEnv('.env.locals');
+  overrideEnv('.env.local');
   return {
     isProduction: getEnv('NODE_ENV') === 'production',
     botToken: getEnv('BOT_TOKEN'),
