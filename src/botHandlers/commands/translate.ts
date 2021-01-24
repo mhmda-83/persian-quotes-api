@@ -10,7 +10,7 @@ const translateHandler: Middleware<Context> = async (ctx) => {
   if (ctx.session) {
     ctx.session.currentQuoteId = randomQuote.id;
     ctx.session.state = TranslationProgressState.TEXT;
-    ctx.session.translatedQuote = {};
+    ctx.session.userTranslatedQuote = {};
   }
   await ctx.reply(QuoteMap.toView(randomQuote));
   ctx.reply(

@@ -8,7 +8,7 @@ import { Logger } from '../logger';
 
 interface CustomSession {
   state: BotState;
-  translatedQuote: Partial<Quote>;
+  userTranslatedQuote: Partial<Quote>;
   currentQuoteId: string;
 }
 interface Context extends TelegrafContext {
