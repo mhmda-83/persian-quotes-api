@@ -1,4 +1,3 @@
-import { MongooseQuoteDoc } from '../model/mongooseQuoteModel';
 import { TranslatedQuote } from '../model/translatedQuote';
 
 export interface QueryOptions {
@@ -36,7 +35,14 @@ interface QuoteRepo {
 
   getRandomByAuthor: (author: string) => Promise<TranslatedQuote | null>;
 
-  insertOne: (quote: TranslatedQuote) => Promise<MongooseQuoteDoc | null>;
+  insertOne: (quote: TranslatedQuote) => Promise<TranslatedQuote | null>;
+
+  updateVerificationById: (
+    quoteId: string,
+    verificationState: boolean,
+  ) => Promise<TranslatedQuote | null>;
+
+  removeById: (quoteId: string) => Promise<boolean>;
 }
 
 export default QuoteRepo;
