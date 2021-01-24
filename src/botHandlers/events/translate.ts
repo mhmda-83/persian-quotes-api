@@ -1,6 +1,11 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Markup, Middleware } from 'telegraf-ts';
 
-import { TranslationProgressState } from '../../data/botActions';
+import {
+  DefaultState,
+  TranslationProgressState,
+  TranslationState,
+} from '../../data/botStates';
 import { Context } from '../../infra/bot/context';
 import { QuoteApiQuote } from '../../services/quoteApi';
 import { QuoteMap } from '../../viewModel/quoteMap';
@@ -22,7 +27,7 @@ const translateHandler: Middleware<Context> = async (ctx) => {
     case TranslationProgressState.CATEGORIES:
       {
         ctx.session.translatedQuote.categories = ctx.message?.text?.split(' ');
-        ctx.session.state = TranslationProgressState.NONE;
+        ctx.session.state = DefaultState.NONE;
         ctx.reply(
           'thanks a lot for your contribution ♥\nwe will notify you when it gets verified',
         );
@@ -39,8 +44,8 @@ const translateHandler: Middleware<Context> = async (ctx) => {
               `${QuoteMap.toView(ctx.session.translatedQuote)}`,
             {
               reply_markup: Markup.inlineKeyboard([
-                Markup.callbackButton('✅', 'verified'),
-                Markup.callbackButton('❌', 'declined'),
+                Markup.callbackButton('✅', TranslationState.VERIFIED),
+                Markup.callbackButton('❌', TranslationState.DECLINED),
               ]).resize(),
             },
           );

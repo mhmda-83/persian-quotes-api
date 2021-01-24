@@ -1,6 +1,6 @@
 import { Middleware } from 'telegraf-ts';
 
-import { TranslationProgressState } from '../../data/botActions';
+import { TranslationProgressState } from '../../data/botStates';
 import { Context } from '../../infra/bot/context';
 import { QuoteApiQuote } from '../../services/quoteApi';
 import { QuoteMap } from '../../viewModel/quoteMap';

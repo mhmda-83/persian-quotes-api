@@ -4,7 +4,7 @@ import { TelegrafOptions } from 'telegraf-ts/typings/telegraf';
 
 import { handlersComposer } from './botHandlers';
 import { Logger, RedisUrlParts } from './config';
-import { TranslationProgressState } from './data/botActions';
+import { DefaultState } from './data/botStates';
 import { Context } from './infra/bot/context';
 import { QuoteApi } from './services/quoteApi';
 
@@ -30,7 +30,7 @@ function createTelegrafBot(
   bot.use(redisSession);
 
   bot.start((ctx: Context) => {
-    ctx.session.state = TranslationProgressState.NONE;
+    ctx.session.state = DefaultState.NONE;
   });
   bot.use(handlersComposer);
   return bot;
