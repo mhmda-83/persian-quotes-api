@@ -3,17 +3,20 @@ import express, { Express } from 'express';
 import { createTelegrafBot } from './bot';
 import { getConfig } from './config';
 import { ConsoleLogger } from './infra/logger';
+import MongooseQuoteRepo from './repository/mongooseQuote';
 import authorRouter from './routers/author';
 import categoryRouter from './routers/category';
 import quoteRouter from './routers/quote';
 
 const config = getConfig();
 const logger = new ConsoleLogger();
+const repo = new MongooseQuoteRepo();
 
 const app: Express = express();
 
 const bot = createTelegrafBot({
   logger,
+  repo,
   ...config,
 });
 if (config.isProduction) app.use(bot.webhookCallback(config.webhookPath));
