@@ -5,7 +5,7 @@ const QuoteMap = {
     text = 'خالی',
     author = 'خالی',
     categories = ['خالی'],
-  }: Partial<Quote>) {
+  }: Partial<Quote> = {}) {
     const mappedCats = categories.map((c) => `#${c}`).join(' ');
     return `${text}\n\n—${author}\n${mappedCats}`;
   },

@@ -11,7 +11,7 @@ import { QuoteApiQuote } from '../../services/quoteApi';
 import { QuoteMap } from '../../viewModel/quoteMap';
 
 const translateHandler: Middleware<Context> = async (ctx) => {
-  switch (ctx.session.state) {
+  switch (ctx.session?.state) {
     case TranslationProgressState.TEXT:
       ctx.session.translatedQuote.text = ctx.message?.text;
       ctx.session.state = TranslationProgressState.AUTHOR;
@@ -41,7 +41,7 @@ const translateHandler: Middleware<Context> = async (ctx) => {
             id,
             `${QuoteMap.toView(quote)}\n` +
               `ترجمه شد به\n\n` +
-              `${QuoteMap.toView(ctx.session.translatedQuote)}`,
+              `${QuoteMap.toView(ctx.session?.translatedQuote)}`,
             {
               reply_markup: Markup.inlineKeyboard([
                 Markup.callbackButton('✅', TranslationState.VERIFIED),
@@ -55,7 +55,6 @@ const translateHandler: Middleware<Context> = async (ctx) => {
 
     default:
       ctx.reply("hmm...this wasn't implemented in my source code 🤔");
-      ctx.reply(JSON.stringify(ctx.session.translatedQuote));
       break;
   }
 };

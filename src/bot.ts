@@ -31,10 +31,10 @@ function createTelegrafBot(
   const redisSession = new RedisSession({
     store: redisUrl,
   });
-  bot.use(redisSession);
+  bot.use(redisSession.middleware());
 
   bot.start((ctx: Context) => {
-    ctx.session.state = DefaultState.NONE;
+    if (ctx.session) ctx.session.state = DefaultState.NONE;
   });
   bot.use(handlersComposer);
   return bot;

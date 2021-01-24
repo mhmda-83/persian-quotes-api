@@ -7,11 +7,11 @@ import { QuoteMap } from '../../viewModel/quoteMap';
 
 const translateHandler: Middleware<Context> = async (ctx) => {
   const randomQuote: QuoteApiQuote = await ctx.quoteService.getRandomQuote();
-
-  ctx.session.currentQuoteId = randomQuote.id;
-  ctx.session.state = TranslationProgressState.TEXT;
-  ctx.session.translatedQuote = {};
-
+  if (ctx.session) {
+    ctx.session.currentQuoteId = randomQuote.id;
+    ctx.session.state = TranslationProgressState.TEXT;
+    ctx.session.translatedQuote = {};
+  }
   await ctx.reply(QuoteMap.toView(randomQuote));
   ctx.reply(
     'now send me the translated quote (just the text for now)\n\n' +

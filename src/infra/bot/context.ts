@@ -14,7 +14,7 @@ interface CustomSession {
 interface Context extends TelegrafContext {
   repo: QuoteRepo;
   logger: Logger;
-  session: CustomSession;
+  session: CustomSession | null;
   quoteService: QuoteApi;
   adminsIds: string[];
 }
