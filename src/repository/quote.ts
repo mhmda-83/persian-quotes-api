@@ -23,6 +23,8 @@ interface QuoteRepo {
     options: QueryOptions,
   ) => Promise<TranslatedQuote[] | null>;
 
+  getByCategoryCount: (category: string) => Promise<number>;
+
   getRandomByCategory: (category: string) => Promise<TranslatedQuote | null>;
 
   getAuthors: () => Promise<string[] | null>;
@@ -33,6 +35,8 @@ interface QuoteRepo {
     author: string,
     options: QueryOptions,
   ) => Promise<TranslatedQuote[] | null>;
+
+  getByAuthorCount: (author: string) => Promise<number>;
 
   getRandomByAuthor: (author: string) => Promise<TranslatedQuote | null>;
 

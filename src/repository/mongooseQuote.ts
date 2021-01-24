@@ -57,6 +57,14 @@ class MongooseQuoteRepo implements QuoteRepo {
     return quotes;
   }
 
+  public async getByCategoryCount(category: string) {
+    const count = await MongooseQuoteModel.find({
+      'translated.categories': category,
+    }).countDocuments();
+
+    return count;
+  }
+
   public async getRandomByCategory(category: string) {
     const quotes: MongooseQuoteDoc[] = await MongooseQuoteModel.aggregate([
       { $match: { 'translated.categories': category } },
@@ -87,6 +95,14 @@ class MongooseQuoteRepo implements QuoteRepo {
     }).setOptions(options);
 
     return quotes;
+  }
+
+  public async getByAuthorCount(author: string) {
+    const count = await MongooseQuoteModel.find({
+      'translated.author': author,
+    }).countDocuments();
+
+    return count;
   }
 
   public async getRandomByAuthor(author: string) {

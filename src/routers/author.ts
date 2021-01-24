@@ -1,10 +1,15 @@
 import express from 'express';
 
-import { getAll, getRandom } from '../apiControllers/author';
+import {
+  getAll,
+  getQuotesByAuthorName,
+  getRandom,
+} from '../apiControllers/author';
 
 const router = express.Router();
 
 router.route('/').get(getAll);
 router.route('/:authorName').get(getRandom);
+router.route('/:authorName/quote').get(getQuotesByAuthorName);
 
 export default router;
