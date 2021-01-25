@@ -51,7 +51,10 @@ class MongooseQuoteRepo implements QuoteRepo {
 
   public async getByCategory(category: string, options: QueryOptions) {
     const quotes = await MongooseQuoteModel.find({
-      'translated.categories': category,
+      $or: [
+        { 'translated.categories': category },
+        { 'original.categories': category },
+      ],
     }).setOptions(options);
 
     return quotes;
@@ -59,7 +62,10 @@ class MongooseQuoteRepo implements QuoteRepo {
 
   public async getByCategoryCount(category: string) {
     const count = await MongooseQuoteModel.find({
-      'translated.categories': category,
+      $or: [
+        { 'translated.categories': category },
+        { 'original.categories': category },
+      ],
     }).countDocuments();
 
     return count;
@@ -67,7 +73,14 @@ class MongooseQuoteRepo implements QuoteRepo {
 
   public async getRandomByCategory(category: string) {
     const quotes: MongooseQuoteDoc[] = await MongooseQuoteModel.aggregate([
-      { $match: { 'translated.categories': category } },
+      {
+        $match: {
+          $or: [
+            { 'translated.categories': category },
+            { 'original.categories': category },
+          ],
+        },
+      },
       { $sample: { size: 1 } },
     ]);
 
@@ -93,7 +106,7 @@ class MongooseQuoteRepo implements QuoteRepo {
 
   public async getByAuthor(author: string, options: QueryOptions) {
     const quotes = await MongooseQuoteModel.find({
-      'translated.author': author,
+      $or: [{ 'translated.author': author }, { 'original.author': author }],
     }).setOptions(options);
 
     return quotes;
@@ -101,7 +114,7 @@ class MongooseQuoteRepo implements QuoteRepo {
 
   public async getByAuthorCount(author: string) {
     const count = await MongooseQuoteModel.find({
-      'translated.author': author,
+      $or: [{ 'translated.author': author }, { 'original.author': author }],
     }).countDocuments();
 
     return count;
@@ -109,7 +122,11 @@ class MongooseQuoteRepo implements QuoteRepo {
 
   public async getRandomByAuthor(author: string) {
     const quotes: MongooseQuoteDoc[] = await MongooseQuoteModel.aggregate([
-      { $match: { 'translated.author': author } },
+      {
+        $match: {
+          $or: [{ 'translated.author': author }, { 'original.author': author }],
+        },
+      },
       { $sample: { size: 1 } },
     ]);
 
