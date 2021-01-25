@@ -12,7 +12,7 @@ const translationVerification: Middleware<Context> = async (ctx) => {
   if (state === TranslationState.VERIFIED) {
     const updatedDoc = await ctx.repo.updateById(docId, { verified: true });
     if (updatedDoc)
-      return ctx.editMessageText(
+      ctx.editMessageText(
         'با موفقیت ثبت شد 🎉\n\nاین پیام بعد از ۵ ثانیه پاک میشود',
       );
   }
