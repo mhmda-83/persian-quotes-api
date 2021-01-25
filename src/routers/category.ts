@@ -10,6 +10,6 @@ const router = express.Router();
 
 router.route('/').get(getAll);
 router.route('/:categoryName').get(getRandom);
-router.route('/:categoryName/quotes').get(getQuotesByCategoryName);
+router.route('/:categoryName/quote').get(getQuotesByCategoryName);
 
 export default router;
