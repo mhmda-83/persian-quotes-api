@@ -15,7 +15,7 @@ interface Config {
   botToken: string;
   port: number;
   webhookPath: string;
-  adminsIds: string[];
+  adminChannelId: number;
   redisUrl: RedisUrlParts;
   databaseUrl: string;
 }
@@ -53,7 +53,7 @@ function getConfig(): Config {
       password: getEnv('REDIS_PASSWORD'),
       host: getEnv('REDIS_HOST'),
     },
-    adminsIds: getEnv('ADMINS_CHAT_IDS').split(','),
+    adminChannelId: Number.parseInt(getEnv('ADMIN_CHANNEL_ID'), 10),
     databaseUrl: getEnv('DATABASE_URL'),
   };
 }

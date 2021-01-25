@@ -24,14 +24,11 @@ export const sendUserQuoteToAdmins = (
     '❌',
     `${TranslationState.DECLINED}-${id}`,
   );
-
-  return ctx.adminsIds.forEach((adminId) => {
-    ctx.telegram.sendMessage(adminId, translatedView, {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      reply_markup: Markup.inlineKeyboard([
-        verifiedMarkupBtn,
-        declinedMarkupBtn,
-      ]).resize(),
-    });
+  ctx.telegram.sendMessage(ctx.adminChannelId, translatedView, {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    reply_markup: Markup.inlineKeyboard([
+      verifiedMarkupBtn,
+      declinedMarkupBtn,
+    ]).resize(),
   });
 };

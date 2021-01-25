@@ -11,14 +11,14 @@ import { QuoteApi } from './services/quoteApi';
 
 interface BotConfig {
   botToken: string;
-  adminsIds: string[];
+  adminChannelId: number;
   redisUrl: RedisUrlParts;
   logger: Logger;
   repo: QuoteRepo;
 }
 
 function createTelegrafBot(
-  { botToken, logger, redisUrl, adminsIds, repo }: BotConfig,
+  { botToken, logger, redisUrl, adminChannelId, repo }: BotConfig,
   options?: TelegrafOptions,
 ) {
   const bot: Telegraf<Context> = new Telegraf<Context>(botToken, options);
@@ -26,7 +26,7 @@ function createTelegrafBot(
   bot.context.repo = repo;
   bot.context.logger = logger;
   bot.context.quoteService = new QuoteApi();
-  bot.context.adminsIds = adminsIds;
+  bot.context.adminChannelId = adminChannelId;
 
   const redisSession = new RedisSession({
     store: redisUrl,

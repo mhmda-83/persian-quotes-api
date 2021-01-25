@@ -16,7 +16,7 @@ interface Context extends TelegrafContext {
   logger: Logger;
   session: CustomSession | null;
   quoteService: QuoteApi;
-  adminsIds: string[];
+  adminChannelId: number;
 }
 
 export { Context };
