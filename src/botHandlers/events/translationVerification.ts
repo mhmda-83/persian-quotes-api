@@ -16,7 +16,6 @@ const translationVerification: Middleware<Context> = async (ctx) => {
       else ctx.reply('it seems something went wrong while trying to delete 🤔');
     }
   }
-  ctx.session = null;
 };
 
 export { translationVerification };

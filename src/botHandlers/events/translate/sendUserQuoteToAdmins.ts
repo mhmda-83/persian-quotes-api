@@ -9,7 +9,7 @@ export const sendUserQuoteToAdmins = (
   ctx: Context,
   savedTranslatedQuote: TranslatedQuote,
 ): void => {
-  if (!ctx.session) return;
+  ctx.session = null;
   const { id, translated, original } = savedTranslatedQuote;
   const translatedView = QuoteMap.translationView({
     original,
