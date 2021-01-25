@@ -4,12 +4,12 @@ import {
   getAll,
   getQuotesByCategoryName,
   getRandom,
-} from '../apiControllers/categories';
+} from '../apiControllers/category';
 
 const router = express.Router();
 
 router.route('/').get(getAll);
-router.route('/:categoryName').get(getRandom);
+router.route('/:categoryName/quote/random').get(getRandom);
 router.route('/:categoryName/quote').get(getQuotesByCategoryName);
 
 export default router;
