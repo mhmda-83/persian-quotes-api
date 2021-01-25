@@ -37,9 +37,9 @@ interface QuoteRepo {
 
   insertOne: (quote: TranslatedQuote) => Promise<TranslatedQuote | null>;
 
-  updateVerificationById: (
+  updateById: (
     quoteId: string,
-    verificationState: boolean,
+    newQuote: Partial<TranslatedQuote>,
   ) => Promise<TranslatedQuote | null>;
 
   removeById: (quoteId: string) => Promise<boolean>;

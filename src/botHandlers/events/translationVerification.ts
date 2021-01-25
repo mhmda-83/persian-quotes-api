@@ -10,7 +10,7 @@ const translationVerification: Middleware<Context> = async (ctx) => {
   const [state, docId] = data.split('-');
 
   if (state === TranslationState.VERIFIED) {
-    const updatedDoc = await ctx.repo.updateVerificationById(docId, true);
+    const updatedDoc = await ctx.repo.updateById(docId, { verified: true });
     if (updatedDoc)
       return ctx.editMessageText(
         'با موفقیت ثبت شد 🎉\n\nاین پیام بعد از ۵ ثانیه پاک میشود',

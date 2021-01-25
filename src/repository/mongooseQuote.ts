@@ -117,22 +117,22 @@ class MongooseQuoteRepo implements QuoteRepo {
     return insertedQuote;
   }
 
-  public async updateVerificationById(
+  public async updateById(
     quoteId: string,
-    verificationState: boolean,
+    newQuote: Partial<TranslatedQuote>,
   ): Promise<MongooseQuoteDoc | null> {
     const updatedQuote = await MongooseQuoteModel.findByIdAndUpdate(
       quoteId,
-      {
-        verified: verificationState,
-      },
-      { returnOriginal: false },
+      newQuote,
+      { returnOriginal: false, useFindAndModify: false },
     );
     return updatedQuote;
   }
 
   public async removeById(quoteId: string): Promise<boolean> {
-    const removedDoc = await MongooseQuoteModel.findByIdAndRemove(quoteId);
+    const removedDoc = await MongooseQuoteModel.findByIdAndRemove(quoteId, {
+      useFindAndModify: false,
+    });
     if (removedDoc) {
       return true;
     }
