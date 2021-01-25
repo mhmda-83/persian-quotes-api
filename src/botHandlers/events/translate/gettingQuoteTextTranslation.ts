@@ -6,5 +6,5 @@ export const gettingQuoteTextTranslation = (ctx: Context) => {
 
   ctx.session.userTranslatedQuote.text = ctx.message?.text;
   ctx.session.state = TranslationProgressState.AUTHOR;
-  return ctx.reply('now send me the author in persian');
+  return ctx.reply('حالا اسم نویسنده رو به فارسی برام بفرست');
 };

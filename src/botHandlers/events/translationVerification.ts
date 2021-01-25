@@ -5,25 +5,27 @@ import { Context } from '../../infra/bot/context';
 
 const translationVerification: Middleware<Context> = async (ctx) => {
   const data = ctx.callbackQuery?.data;
-  if (data != null) {
-    const [state, docId] = data.split('-');
-    if (state === TranslationState.VERIFIED) {
-      await ctx.repo.updateVerificationById(docId, true);
-      ctx.editMessageText(
-        'saved successfully 🎉\n\n this message will be deleted in 5 seconds',
+  if (data == null) return null;
+
+  const [state, docId] = data.split('-');
+
+  if (state === TranslationState.VERIFIED) {
+    const updatedDoc = await ctx.repo.updateVerificationById(docId, true);
+    if (updatedDoc)
+      return ctx.editMessageText(
+        'با موفقیت ثبت شد 🎉\n\nاین پیام بعد از ۵ ثانیه پاک میشود',
       );
-    } else if (state === TranslationState.DECLINED) {
-      const isRemoved = await ctx.repo.removeById(docId);
-      if (isRemoved)
-        ctx.editMessageText(
-          'removed from the database successfully 🎉\n\nthis message will be deleted in 5 seconds',
-        );
-      else ctx.reply('it seems something went wrong while trying to delete 🤔');
-    }
-    setTimeout(() => {
-      ctx.deleteMessage();
-    }, 5000);
   }
+
+  const removedDoc = await ctx.repo.removeById(docId);
+  if (removedDoc)
+    ctx.editMessageText(
+      'با موفقیت پاک شد 🎉\n\nاین پیام بعد از ۵ ثانیه پاک میشود',
+    );
+
+  return setTimeout(() => {
+    ctx.deleteMessage();
+  }, 5000);
 };
 
 export { translationVerification };

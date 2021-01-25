@@ -9,7 +9,5 @@ export const gettingQuoteCatTranslation = (ctx: Context) => {
   userTranslatedQuote.categories = ctx.message?.text?.split(' ');
   ctx.session.state = DefaultState.NONE;
 
-  return ctx.reply(
-    'thanks a lot for your contribution ♥\nwe will notify you when it gets verified',
-  );
+  return ctx.reply('\nممنون که در توسعه این API مشارکت کردید ♥♥');
 };

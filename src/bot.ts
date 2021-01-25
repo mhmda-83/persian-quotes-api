@@ -4,7 +4,6 @@ import { TelegrafOptions } from 'telegraf-ts/typings/telegraf';
 
 import { handlersComposer } from './botHandlers';
 import { Logger, RedisUrlParts } from './config';
-import { DefaultState } from './data/botStates';
 import { Context } from './infra/bot/context';
 import QuoteRepo from './repository/quote';
 import { QuoteApi } from './services/quoteApi';
@@ -32,10 +31,6 @@ function createTelegrafBot(
     store: redisUrl,
   });
   bot.use(redisSession.middleware());
-
-  bot.start((ctx: Context) => {
-    if (ctx.session) ctx.session.state = DefaultState.NONE;
-  });
   bot.use(handlersComposer);
   return bot;
 }
