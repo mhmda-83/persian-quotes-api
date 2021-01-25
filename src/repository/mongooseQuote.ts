@@ -78,7 +78,9 @@ class MongooseQuoteRepo implements QuoteRepo {
 
   public async getAuthors() {
     const quotes = await MongooseQuoteModel.find();
-    const authors: string[] = quotes.map((quote) => quote.translated.author);
+    let authors: string[] = quotes.map((quote) => quote.translated.author);
+
+    authors = Array.from(new Set(authors));
 
     return authors;
   }
