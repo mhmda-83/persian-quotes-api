@@ -38,5 +38,10 @@ export const getQuotesByCategoryName = async (req: Request, res: Response) => {
 
   const hasNextPage = page * PAGE_SIZE < quotesCount;
 
-  res.json({ quotes, page, hasNextPage, totalCount: quotes.length });
+  res.json({
+    quotes,
+    page,
+    hasNextPage,
+    totalCount: quotesCount,
+  });
 };
