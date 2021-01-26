@@ -41,7 +41,6 @@ class MongooseQuoteRepo implements QuoteRepo {
     let categories: string[] = aggregationResult.map(
       (aggregateResult) => aggregateResult._id,
     );
-    // quotes.forEach((quote) => categories.push(...quote.translated.categories));
 
     categories = Array.from(new Set(categories));
 
