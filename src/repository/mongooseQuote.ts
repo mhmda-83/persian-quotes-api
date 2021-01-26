@@ -33,10 +33,15 @@ class MongooseQuoteRepo implements QuoteRepo {
   }
 
   public async getCategories() {
-    const quotes = await MongooseQuoteModel.find();
+    const aggregationResult = await MongooseQuoteModel.aggregate([
+      { $unwind: '$translated.categories' },
+      { $group: { _id: '$translated.categories' } },
+    ]);
 
-    let categories: string[] = [];
-    quotes.forEach((quote) => categories.push(...quote.translated.categories));
+    let categories: string[] = aggregationResult.map(
+      (aggregateResult) => aggregateResult._id,
+    );
+    // quotes.forEach((quote) => categories.push(...quote.translated.categories));
 
     categories = Array.from(new Set(categories));
 
@@ -90,10 +95,13 @@ class MongooseQuoteRepo implements QuoteRepo {
   }
 
   public async getAuthors() {
-    const quotes = await MongooseQuoteModel.find();
-    let authors: string[] = quotes.map((quote) => quote.translated.author);
+    const aggregationResult = await MongooseQuoteModel.aggregate([
+      { $group: { _id: '$translated.author' } },
+    ]);
 
-    authors = Array.from(new Set(authors));
+    const authors: string[] = aggregationResult.map(
+      (aggregateResult) => aggregateResult._id,
+    );
 
     return authors;
   }
