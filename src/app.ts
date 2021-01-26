@@ -13,8 +13,8 @@ const bot = createTelegrafBot(config.botToken);
 if (config.isProduction) app.use(bot.webhookCallback(config.webhookPath));
 else bot.launch();
 
-app.use('/api/v1/quote', quoteRouter);
-app.use('/api/v1/category', categoryRouter);
-app.use('/api/v1/author', authorRouter);
+app.use('/api/v1/quotes', quoteRouter);
+app.use('/api/v1/categories', categoryRouter);
+app.use('/api/v1/authors', authorRouter);
 
 export default app;

@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { getAll, getById, getRandom } from '../apiControllers/quote';
+import { getAll, getById, getRandom } from '../apiControllers/quotes';
 
 const router = express.Router();
 
