@@ -1,5 +1,6 @@
 import { ConstantConfiguration, ContainerConfiguration } from 'typescript-ioc';
 
+import { TelegrafBot } from '../bot';
 import {
   CustomContextProps,
   CustomContextPropsImp,
@@ -19,5 +20,6 @@ export function createContainer(): ContainerConfig {
     { bind: QuoteRepo, to: MongooseQuoteRepo },
     { bind: QuoteApi, to: QuoteApi },
     { bind: CustomContextProps, to: CustomContextPropsImp },
+    { bind: TelegrafBot, to: TelegrafBot },
   ];
 }
