@@ -11,6 +11,7 @@ interface RedisUrlParts {
   host: string;
 }
 interface Config {
+  baseUrl: string;
   isProduction: boolean;
   botToken: string;
   port: number;
@@ -55,6 +56,7 @@ function getConfig(): Config {
     },
     adminChannelId: Number.parseInt(getEnv('ADMIN_CHANNEL_ID'), 10),
     databaseUrl: getEnv('DATABASE_URL'),
+    baseUrl: getEnv('BASE_URL'),
   };
 }
 export { Config, getConfig, Logger, RedisUrlParts };
