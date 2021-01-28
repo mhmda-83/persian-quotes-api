@@ -1,4 +1,7 @@
-const sampleRecords = [
+import { TranslatedQuote } from '../model/translatedQuote';
+import { QuoteState } from './quote';
+
+const sampleRecords: TranslatedQuote[] = [
   {
     original: {
       author: 'Ann Patchett,  Bel Canto',
@@ -8,7 +11,7 @@ const sampleRecords = [
     },
     translated: { categories: [] },
 
-    verified: 'NOT_TRANSLATED',
+    verified: QuoteState.NOT_TRANSLATED,
   },
   {
     original: {
@@ -84,7 +87,7 @@ const sampleRecords = [
     },
     translated: { categories: [] },
 
-    verified: 'NOT_TRANSLATED',
+    verified: QuoteState.NOT_TRANSLATED,
   },
   {
     original: {
@@ -160,7 +163,7 @@ const sampleRecords = [
     },
     translated: { categories: [] },
 
-    verified: 'NOT_TRANSLATED',
+    verified: QuoteState.NOT_TRANSLATED,
   },
   {
     original: {
@@ -236,7 +239,7 @@ const sampleRecords = [
     },
     translated: { categories: [] },
 
-    verified: 'NOT_TRANSLATED',
+    verified: QuoteState.NOT_TRANSLATED,
   },
   {
     original: {
@@ -275,7 +278,7 @@ const sampleRecords = [
     },
     translated: { categories: [] },
 
-    verified: 'NOT_TRANSLATED',
+    verified: QuoteState.NOT_TRANSLATED,
   },
   {
     original: {
@@ -286,7 +289,7 @@ const sampleRecords = [
     },
     translated: { categories: [] },
 
-    verified: 'NOT_TRANSLATED',
+    verified: QuoteState.NOT_TRANSLATED,
   },
   {
     original: {
@@ -362,7 +365,7 @@ const sampleRecords = [
     },
     translated: { categories: [] },
 
-    verified: 'NOT_TRANSLATED',
+    verified: QuoteState.NOT_TRANSLATED,
   },
   {
     original: {
@@ -438,7 +441,7 @@ const sampleRecords = [
     },
     translated: { categories: [] },
 
-    verified: 'NOT_TRANSLATED',
+    verified: QuoteState.NOT_TRANSLATED,
   },
   {
     original: {
@@ -514,7 +517,7 @@ const sampleRecords = [
     },
     translated: { categories: [] },
 
-    verified: 'NOT_TRANSLATED',
+    verified: QuoteState.NOT_TRANSLATED,
   },
 ];
 
