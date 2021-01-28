@@ -26,6 +26,14 @@ class MongooseQuoteRepo implements QuoteRepo {
       .catch(this.logger.error);
   }
 
+  public async seed(data: TranslatedQuote[]): Promise<MongooseQuoteRepo> {
+    const documentsCount = await MongooseQuoteModel.count();
+    if (documentsCount === 0) {
+      data.forEach((d) => MongooseQuoteModel.create(d));
+    }
+    return this;
+  }
+
   public async getAll(options: QueryOptions): Promise<TranslatedQuote[]> {
     const quotes = await MongooseQuoteModel.find().setOptions(options);
     return quotes;

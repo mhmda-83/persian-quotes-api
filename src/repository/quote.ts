@@ -6,6 +6,9 @@ export interface QueryOptions {
 }
 abstract class QuoteRepo {
   connect: () => void;
+
+  seed: (data: TranslatedQuote[]) => Promise<QuoteRepo>;
+
   getAll: (options: QueryOptions) => Promise<TranslatedQuote[] | null>;
 
   getCount: () => Promise<number>;
