@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import { Inject, InjectValue } from 'typescript-ioc';
 
 import { Config, Logger } from '../config';
+import { QuoteState } from '../data/quote';
 import MongooseQuoteModel, {
   MongooseQuoteDoc,
 } from '../model/mongooseQuoteModel';
@@ -26,12 +27,12 @@ class MongooseQuoteRepo implements QuoteRepo {
       .catch(this.logger.error);
   }
 
-  public async seed(data: TranslatedQuote[]): Promise<MongooseQuoteRepo> {
-    const documentsCount = await MongooseQuoteModel.count();
+  public async seed(data: TranslatedQuote[]): Promise<void> {
+    const documentsCount = await MongooseQuoteModel.countDocuments();
+    this.logger.log(documentsCount);
     if (documentsCount === 0) {
       data.forEach((d) => MongooseQuoteModel.create(d));
     }
-    return this;
   }
 
   public async getAll(options: QueryOptions): Promise<TranslatedQuote[]> {
@@ -64,7 +65,10 @@ class MongooseQuoteRepo implements QuoteRepo {
     const quotes = await MongooseQuoteModel.find();
 
     let categories: string[] = [];
-    quotes.forEach((quote) => categories.push(...quote.translated.categories));
+    quotes.forEach((quote) => {
+      if (quote?.translated.categories)
+        categories.push(...quote.translated.categories);
+    });
 
     categories = Array.from(new Set(categories));
 
@@ -103,7 +107,12 @@ class MongooseQuoteRepo implements QuoteRepo {
 
   public async getAuthors(): Promise<string[]> {
     const quotes = await MongooseQuoteModel.find();
-    const authors: string[] = quotes.map((quote) => quote.translated.author);
+    let authors: string[] = [];
+    quotes.forEach((quote) => {
+      if (quote?.translated.author) authors.push(...quote.translated.author);
+    });
+
+    authors = Array.from(new Set(authors));
 
     return authors;
   }
@@ -177,6 +186,14 @@ class MongooseQuoteRepo implements QuoteRepo {
     ]);
     this.logger.log(quote);
     return quote;
+  }
+
+  public async resetById(docId: string): Promise<TranslatedQuote | null> {
+    const reseted = await this.updateById(docId, {
+      verified: QuoteState.NOT_TRANSLATED,
+      translated: { categories: [] },
+    });
+    return reseted;
   }
 }
 

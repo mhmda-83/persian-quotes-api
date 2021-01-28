@@ -50,6 +50,8 @@ abstract class QuoteRepo {
   ) => Promise<TranslatedQuote | null>;
 
   removeById: (quoteId: string) => Promise<boolean>;
+
+  resetById: (quoteId: string) => Promise<TranslatedQuote | null>;
 }
 
 export default QuoteRepo;
