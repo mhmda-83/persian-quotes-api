@@ -15,21 +15,20 @@ const translationVerification: Middleware<Context> = async (ctx) => {
       verified: QuoteState.VERIFIED,
     });
     if (updatedDoc)
-      return ctx.editMessageText(
+      ctx.editMessageText(
         'با موفقیت ثبت شد 🎉\n\nاین پیام بعد از ۵ ثانیه پاک میشود',
       );
-    return ctx.editMessageText('خطایی رخ داد');
+    ctx.editMessageText('خطایی رخ داد');
   } else {
-    // const removedDoc = await ctx.repo.removeById(docId);
-    // if (removedDoc)
-    //   ctx.editMessageText(
-    //     'با موفقیت پاک شد 🎉\n\nاین پیام بعد از ۵ ثانیه پاک میشود',
-    //   );
-
-    return setTimeout(() => {
-      ctx.deleteMessage();
-    }, 5000);
+    const resetedDoc = await ctx.repo.resetById(docId);
+    if (resetedDoc)
+      ctx.editMessageText(
+        'با موفقیت پاک شد 🎉\n\nاین پیام بعد از ۵ ثانیه پاک میشود',
+      );
   }
+  return setTimeout(() => {
+    ctx.deleteMessage();
+  }, 5000);
 };
 
 export { translationVerification };
