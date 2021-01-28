@@ -159,6 +159,17 @@ class MongooseQuoteRepo implements QuoteRepo {
     }
     return false;
   }
+
+  public async getRandomByField(
+    condition: Partial<TranslatedQuote>,
+  ): Promise<TranslatedQuote | null> {
+    const [quote] = await MongooseQuoteModel.aggregate([
+      { $match: condition },
+      { $sample: { size: 1 } },
+    ]);
+    this.logger.log(quote);
+    return quote;
+  }
 }
 
 export default MongooseQuoteRepo;
