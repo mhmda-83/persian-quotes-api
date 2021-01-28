@@ -10,9 +10,9 @@ const schema = new mongoose.Schema({
     categories: { type: [String], required: true },
   },
   translated: {
-    text: { type: String, required: true },
-    author: { type: String, required: true },
-    categories: { type: [String], required: true },
+    text: { type: String, required: false },
+    author: { type: String, required: false },
+    categories: { type: [String], required: false },
   },
   verified: {
     type: String,
