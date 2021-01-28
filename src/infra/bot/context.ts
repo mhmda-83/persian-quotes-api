@@ -1,12 +1,13 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { TelegrafContext } from 'telegraf-ts';
+import { Inject, InjectValue } from 'typescript-ioc';
 
 import { BotState } from '../../data/botStates';
 import { Quote } from '../../model/quote';
 import QuoteRepo from '../../repository/quote';
-import { QuoteApi } from '../../services/quoteApi';
 import { Logger } from '../logger';
 
-interface CustomSession {
+interface TelegrafSession {
   state: BotState;
   userTranslatedQuote: Partial<Quote>;
   currentQuoteId: string;
@@ -14,9 +15,21 @@ interface CustomSession {
 interface Context extends TelegrafContext {
   repo: QuoteRepo;
   logger: Logger;
-  session: CustomSession | null;
-  quoteService: QuoteApi;
+  session: TelegrafSession | null;
   adminChannelId: number;
 }
 
-export { Context };
+abstract class CustomContextProps {
+  public logger: Logger;
+  public repo: QuoteRepo;
+  public session: TelegrafSession;
+  public adminChannelId: number;
+}
+
+class CustomContextPropsImp implements CustomContextProps {
+  @Inject public logger: Logger;
+  @Inject public repo: QuoteRepo;
+  @Inject public session: TelegrafSession;
+  @InjectValue('config.adminChannelId') public adminChannelId: number;
+}
+export { Context, CustomContextProps, CustomContextPropsImp, TelegrafSession };

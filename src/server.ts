@@ -1,24 +1,15 @@
-import mongoose from 'mongoose';
+import { Container } from 'typescript-ioc';
 
-import app from './app';
+import { ExpressApp } from './app';
+import { TelegrafBot } from './bot';
 import { getConfig } from './config';
-import { ConsoleLogger } from './infra/logger';
+import { createContainer } from './config/container';
 
+Container.configure(...createContainer());
+
+const app = new ExpressApp();
+const bot = new TelegrafBot();
 const config = getConfig();
 
-const logger = new ConsoleLogger();
-
-mongoose
-  .connect(config.databaseUrl, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    logger.info('Database Connected :)');
-    app.listen(config.port, () => {
-      logger.info(`Server Started on Port ${config.port}`);
-    });
-  })
-  .catch(logger.error);
+if (config.isProduction) app.useMiddleware(bot.lunchUsingWebhook());
+else bot.launchUsingPooling();

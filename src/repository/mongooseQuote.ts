@@ -1,3 +1,7 @@
+import mongoose from 'mongoose';
+import { Inject, InjectValue } from 'typescript-ioc';
+
+import { Config, Logger } from '../config';
 import MongooseQuoteModel, {
   MongooseQuoteDoc,
 } from '../model/mongooseQuoteModel';
@@ -5,6 +9,23 @@ import { TranslatedQuote } from '../model/translatedQuote';
 import QuoteRepo, { QueryOptions } from './quote';
 
 class MongooseQuoteRepo implements QuoteRepo {
+  @Inject private logger: Logger;
+  @InjectValue('config') private config: Config;
+
+  public connect() {
+    mongoose
+      .connect(this.config.databaseUrl, {
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useFindAndModify: true,
+        useUnifiedTopology: true,
+      })
+      .then(() => {
+        this.logger.info('Database Connected :)');
+      })
+      .catch(this.logger.error);
+  }
+
   public async getAll(options: QueryOptions): Promise<TranslatedQuote[]> {
     const quotes = await MongooseQuoteModel.find().setOptions(options);
     return quotes;

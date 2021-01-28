@@ -1,36 +1,39 @@
-import express, { Express } from 'express';
+import express, { Express, RequestHandler } from 'express';
+import { Inject } from 'typescript-ioc';
 
-import { createTelegrafBot } from './bot';
 import { getConfig } from './config';
-import { ConsoleLogger } from './infra/logger';
-import MongooseQuoteRepo from './repository/mongooseQuote';
+import { Logger } from './infra/logger';
 import authorRouter from './routers/author';
 import categoryRouter from './routers/category';
 import quoteRouter from './routers/quote';
 
 const config = getConfig();
-const logger = new ConsoleLogger();
-const repo = new MongooseQuoteRepo();
 
-const app: Express = express();
+class ExpressApp {
+  @Inject logger: Logger;
+  private app: Express;
 
-const bot = createTelegrafBot({
-  logger,
-  repo,
-  ...config,
-});
-if (config.isProduction) app.use(bot.webhookCallback(config.webhookPath));
-else
-  bot
-    .launch()
-    .then(() => logger.log('bot launch successfully  ✅'))
-    .catch((err) => {
-      logger.log('following error occurred ❌:');
-      logger.error(err);
+  constructor() {
+    this.app = express();
+
+    this.useRouteHandler('/api/v1/quote', quoteRouter);
+    this.useRouteHandler('/api/v1/category', categoryRouter);
+    this.useRouteHandler('/api/v1/author', authorRouter);
+  }
+
+  public listen() {
+    this.app.listen(config.port, () => {
+      this.logger.info(`Server Started on Port ${config.port}`);
     });
+  }
 
-app.use('/api/v1/quote', quoteRouter);
-app.use('/api/v1/category', categoryRouter);
-app.use('/api/v1/author', authorRouter);
+  useRouteHandler(route: string, middleware: RequestHandler) {
+    this.app.use(route, middleware);
+  }
 
-export default app;
+  useMiddleware(middleware: RequestHandler) {
+    this.app.use(middleware);
+  }
+}
+
+export { ExpressApp };

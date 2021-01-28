@@ -4,7 +4,8 @@ export interface QueryOptions {
   limit?: number;
   skip?: number;
 }
-interface QuoteRepo {
+abstract class QuoteRepo {
+  connect: () => void;
   getAll: (options: QueryOptions) => Promise<TranslatedQuote[] | null>;
 
   getCount: () => Promise<number>;
@@ -34,6 +35,9 @@ interface QuoteRepo {
   ) => Promise<TranslatedQuote[] | null>;
 
   getRandomByAuthor: (author: string) => Promise<TranslatedQuote | null>;
+  getRandomByField: (
+    condition: Partial<TranslatedQuote>,
+  ) => Promise<TranslatedQuote | null>;
 
   insertOne: (quote: TranslatedQuote) => Promise<TranslatedQuote | null>;
 
