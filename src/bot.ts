@@ -21,8 +21,6 @@ class TelegrafBot {
       Reflect.getPrototypeOf(this.telegrafContextProps),
     );
 
-    this.bot.context.repo.connect();
-
     this.bot.use(handlersComposer);
     this.bot.use(new RedisSession({ store: this.config.redisUrl }));
   }
