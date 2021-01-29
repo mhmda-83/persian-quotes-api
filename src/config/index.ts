@@ -4,12 +4,15 @@ import fs from 'fs';
 
 import { Logger } from '../infra/logger';
 
+const envToBoolean = (env: string) => env === 'true';
+
 interface RedisUrlParts {
   port: number;
   username: string;
   password: string;
   host: string;
 }
+
 interface Config {
   baseUrl: string;
   isProduction: boolean;
@@ -58,7 +61,7 @@ function getConfig(): Config {
     adminChannelId: Number.parseInt(getEnv('ADMIN_CHANNEL_ID'), 10),
     databaseUrl: getEnv('DATABASE_URL'),
     baseUrl: getEnv('BASE_URL'),
-    useTorProxy: Boolean(getEnv('USE_TOR_PROXY', false)),
+    useTorProxy: envToBoolean(getEnv('USE_TOR_PROXY', false)),
   };
 }
 export { Config, getConfig, Logger, RedisUrlParts };
