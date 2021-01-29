@@ -26,6 +26,8 @@ abstract class QuoteRepo {
     options: QueryOptions,
   ) => Promise<TranslatedQuote[] | null>;
 
+  getCountByCategory: (category: string) => Promise<number>;
+
   getRandomByCategory: (category: string) => Promise<TranslatedQuote | null>;
 
   getAuthors: () => Promise<string[] | null>;
@@ -36,6 +38,8 @@ abstract class QuoteRepo {
     author: string,
     options: QueryOptions,
   ) => Promise<TranslatedQuote[] | null>;
+
+  getCountByAuthor: (author: string) => Promise<number>;
 
   getRandomByAuthor: (author: string) => Promise<TranslatedQuote | null>;
   getRandomByField: (

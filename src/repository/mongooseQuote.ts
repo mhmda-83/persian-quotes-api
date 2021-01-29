@@ -61,14 +61,15 @@ class MongooseQuoteRepo implements QuoteRepo {
     return quote;
   }
 
-  public async getCategories(): Promise<string[]> {
-    const quotes = await MongooseQuoteModel.find();
+  public async getCategories() {
+    const aggregationResult = await MongooseQuoteModel.aggregate([
+      { $unwind: '$translated.categories' },
+      { $group: { _id: '$translated.categories' } },
+    ]);
 
-    let categories: string[] = [];
-    quotes.forEach((quote) => {
-      if (quote?.translated.categories)
-        categories.push(...quote.translated.categories);
-    });
+    let categories: string[] = aggregationResult.map(
+      (aggregateResult) => aggregateResult._id,
+    );
 
     categories = Array.from(new Set(categories));
 
@@ -86,17 +87,38 @@ class MongooseQuoteRepo implements QuoteRepo {
     options: QueryOptions,
   ): Promise<TranslatedQuote[] | null> {
     const quotes = await MongooseQuoteModel.find({
-      'translated.categories': category,
+      $or: [
+        { 'translated.categories': category },
+        { 'original.categories': category },
+      ],
     }).setOptions(options);
 
     return quotes;
+  }
+
+  public async getCountByCategory(category: string): Promise<number> {
+    const count = await MongooseQuoteModel.find({
+      $or: [
+        { 'translated.categories': category },
+        { 'original.categories': category },
+      ],
+    }).countDocuments();
+
+    return count;
   }
 
   public async getRandomByCategory(
     category: string,
   ): Promise<TranslatedQuote | null> {
     const quotes: MongooseQuoteDoc[] = await MongooseQuoteModel.aggregate([
-      { $match: { 'translated.categories': category } },
+      {
+        $match: {
+          $or: [
+            { 'translated.categories': category },
+            { 'original.categories': category },
+          ],
+        },
+      },
       { $sample: { size: 1 } },
     ]);
 
@@ -128,17 +150,29 @@ class MongooseQuoteRepo implements QuoteRepo {
     options: QueryOptions,
   ): Promise<TranslatedQuote[] | null> {
     const quotes = await MongooseQuoteModel.find({
-      'translated.author': author,
+      $or: [{ 'translated.author': author }, { 'original.author': author }],
     }).setOptions(options);
 
     return quotes;
+  }
+
+  public async getCountByAuthor(author: string): Promise<number> {
+    const count = await MongooseQuoteModel.find({
+      $or: [{ 'translated.author': author }, { 'original.author': author }],
+    }).countDocuments();
+
+    return count;
   }
 
   public async getRandomByAuthor(
     author: string,
   ): Promise<TranslatedQuote | null> {
     const quotes: MongooseQuoteDoc[] = await MongooseQuoteModel.aggregate([
-      { $match: { 'translated.author': author } },
+      {
+        $match: {
+          $or: [{ 'translated.author': author }, { 'original.author': author }],
+        },
+      },
       { $sample: { size: 1 } },
     ]);
 
