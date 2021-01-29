@@ -11,7 +11,7 @@ const sampleRecords: TranslatedQuote[] = [
     },
     translated: { categories: [] },
 
-    verified: QuoteState.NOT_TRANSLATED,
+    state: QuoteState.NOT_TRANSLATED,
   },
   {
     original: {
@@ -87,7 +87,7 @@ const sampleRecords: TranslatedQuote[] = [
     },
     translated: { categories: [] },
 
-    verified: QuoteState.NOT_TRANSLATED,
+    state: QuoteState.NOT_TRANSLATED,
   },
   {
     original: {
@@ -163,7 +163,7 @@ const sampleRecords: TranslatedQuote[] = [
     },
     translated: { categories: [] },
 
-    verified: QuoteState.NOT_TRANSLATED,
+    state: QuoteState.NOT_TRANSLATED,
   },
   {
     original: {
@@ -239,7 +239,7 @@ const sampleRecords: TranslatedQuote[] = [
     },
     translated: { categories: [] },
 
-    verified: QuoteState.NOT_TRANSLATED,
+    state: QuoteState.NOT_TRANSLATED,
   },
   {
     original: {
@@ -278,7 +278,7 @@ const sampleRecords: TranslatedQuote[] = [
     },
     translated: { categories: [] },
 
-    verified: QuoteState.NOT_TRANSLATED,
+    state: QuoteState.NOT_TRANSLATED,
   },
   {
     original: {
@@ -289,7 +289,7 @@ const sampleRecords: TranslatedQuote[] = [
     },
     translated: { categories: [] },
 
-    verified: QuoteState.NOT_TRANSLATED,
+    state: QuoteState.NOT_TRANSLATED,
   },
   {
     original: {
@@ -365,7 +365,7 @@ const sampleRecords: TranslatedQuote[] = [
     },
     translated: { categories: [] },
 
-    verified: QuoteState.NOT_TRANSLATED,
+    state: QuoteState.NOT_TRANSLATED,
   },
   {
     original: {
@@ -441,7 +441,7 @@ const sampleRecords: TranslatedQuote[] = [
     },
     translated: { categories: [] },
 
-    verified: QuoteState.NOT_TRANSLATED,
+    state: QuoteState.NOT_TRANSLATED,
   },
   {
     original: {
@@ -517,7 +517,7 @@ const sampleRecords: TranslatedQuote[] = [
     },
     translated: { categories: [] },
 
-    verified: QuoteState.NOT_TRANSLATED,
+    state: QuoteState.NOT_TRANSLATED,
   },
 ];
 

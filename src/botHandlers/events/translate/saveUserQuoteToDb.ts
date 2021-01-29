@@ -20,7 +20,7 @@ export const saveUserQuoteToDb = async (
   const translatedQuote: TranslatedQuote = {
     original: quote?.original,
     translated: userTranslatedQuote as Quote,
-    verified: QuoteState.NOT_VERIFIED,
+    state: QuoteState.NOT_VERIFIED,
   };
   const savedTranslatedQuote = await ctx.repo.updateById(
     currentQuoteId,

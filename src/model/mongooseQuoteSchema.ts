@@ -14,7 +14,7 @@ const schema = new mongoose.Schema({
     author: { type: String, required: false },
     categories: { type: [String], required: false },
   },
-  verified: {
+  state: {
     type: String,
     enum: [
       QuoteState.NOT_TRANSLATED,

@@ -7,7 +7,7 @@ import { QuoteMap } from '../../viewModel/quoteMap';
 
 const translateHandler: Middleware<Context> = async (ctx) => {
   const randomQuote = await ctx.repo.getRandomByField({
-    verified: QuoteState.NOT_TRANSLATED,
+    state: QuoteState.NOT_TRANSLATED,
   });
   if (ctx.session && randomQuote) {
     ctx.logger.log(randomQuote.id, randomQuote);
