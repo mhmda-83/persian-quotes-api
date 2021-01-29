@@ -62,24 +62,34 @@ class MongooseQuoteRepo implements QuoteRepo {
   }
 
   public async getCategories() {
-    const aggregationResult = await MongooseQuoteModel.aggregate([
+    const translatedAggregationResult = await MongooseQuoteModel.aggregate([
       { $unwind: '$translated.categories' },
       { $group: { _id: '$translated.categories' } },
     ]);
+    const originalAggregationResult = await MongooseQuoteModel.aggregate([
+      { $unwind: '$original.categories' },
+      { $group: { _id: '$original.categories' } },
+    ]);
 
-    let categories: string[] = aggregationResult.map(
+    let translatedCategories: string[] = translatedAggregationResult.map(
       (aggregateResult) => aggregateResult._id,
     );
 
-    categories = Array.from(new Set(categories));
+    translatedCategories = Array.from(new Set(translatedCategories));
 
-    return categories;
+    let originalCategories: string[] = originalAggregationResult.map(
+      (aggregateResult) => aggregateResult._id,
+    );
+
+    originalCategories = Array.from(new Set(originalCategories));
+
+    return { original: originalCategories, translated: translatedCategories };
   }
 
   public async getCategoriesCount(): Promise<number> {
     const categories = await this.getCategories();
 
-    return categories?.length ?? 0;
+    return categories.translated.length ?? 0;
   }
 
   public async getByCategory(
@@ -127,22 +137,30 @@ class MongooseQuoteRepo implements QuoteRepo {
     return quote;
   }
 
-  public async getAuthors(): Promise<string[]> {
-    const quotes = await MongooseQuoteModel.find();
-    let authors: string[] = [];
-    quotes.forEach((quote) => {
-      if (quote?.translated.author) authors.push(...quote.translated.author);
-    });
+  public async getAuthors() {
+    const translatedAggregationResult = await MongooseQuoteModel.aggregate([
+      { $group: { _id: '$translated.author' } },
+    ]);
 
-    authors = Array.from(new Set(authors));
+    const originalAggregationResult = await MongooseQuoteModel.aggregate([
+      { $group: { _id: '$original.author' } },
+    ]);
 
-    return authors;
+    const translatedAuthors: string[] = translatedAggregationResult
+      .filter((aggregateResult) => aggregateResult._id != null)
+      .map((aggregateResult) => aggregateResult._id);
+
+    const originalAuthors: string[] = originalAggregationResult.map(
+      (aggregateResult) => aggregateResult._id,
+    );
+
+    return { original: originalAuthors, translated: translatedAuthors };
   }
 
   public async getAuthorsCount(): Promise<number> {
     const authors = await this.getAuthors();
 
-    return authors?.length ?? 0;
+    return authors.translated.length ?? 0;
   }
 
   public async getByAuthor(

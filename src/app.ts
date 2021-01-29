@@ -26,9 +26,9 @@ class ExpressApp {
     this.repo.connect();
     if (seedingData) await this.repo.seed(seedingData);
 
-    this.app.use('/api/v1/quote', quoteRouter);
-    this.app.use('/api/v1/category', categoryRouter);
-    this.app.use('/api/v1/author', authorRouter);
+    this.app.use('/api/v1/quotes', quoteRouter);
+    this.app.use('/api/v1/categories', categoryRouter);
+    this.app.use('/api/v1/authors', authorRouter);
   }
 
   public listen() {
