@@ -242,7 +242,7 @@ class MongooseQuoteRepo implements QuoteRepo {
 
   public async resetById(docId: string): Promise<TranslatedQuote | null> {
     const reseted = await this.updateById(docId, {
-      verified: QuoteState.NOT_TRANSLATED,
+      state: QuoteState.NOT_TRANSLATED,
       translated: { categories: [] },
     });
     return reseted;
