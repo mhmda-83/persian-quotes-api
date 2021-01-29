@@ -19,6 +19,7 @@ interface Config {
   adminChannelId: number;
   redisUrl: RedisUrlParts;
   databaseUrl: string;
+  useTorProxy: boolean;
 }
 
 function overrideEnv(
@@ -35,7 +36,7 @@ function overrideEnv(
   process.env = { ...process.env, ...overrideEnvValues };
 }
 
-function getEnv(envName: string, defaultEnv?: string): string {
+function getEnv(envName: string, defaultEnv?: any): string {
   const env = process.env[envName] ?? defaultEnv;
   if (env == null) throw Error(`undefined environment variable: ${envName}`);
   return env;
@@ -57,6 +58,7 @@ function getConfig(): Config {
     adminChannelId: Number.parseInt(getEnv('ADMIN_CHANNEL_ID'), 10),
     databaseUrl: getEnv('DATABASE_URL'),
     baseUrl: getEnv('BASE_URL'),
+    useTorProxy: Boolean(getEnv('USE_TOR_PROXY', false)),
   };
 }
 export { Config, getConfig, Logger, RedisUrlParts };
