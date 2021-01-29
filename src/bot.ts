@@ -1,3 +1,4 @@
+import { SocksProxyAgent } from 'socks-proxy-agent';
 import RedisSession from 'telegraf-session-redis';
 import { Telegraf } from 'telegraf-ts';
 import { TelegrafOptions } from 'telegraf-ts/typings/telegraf';
@@ -13,8 +14,19 @@ class TelegrafBot {
   @InjectValue('config') config: Config;
   @Inject telegrafContextProps: CustomContextProps;
 
-  constructor(options: TelegrafOptions = {}) {
-    this.bot = new Telegraf<Context>(this.config.botToken, options);
+  constructor() {
+    const botOptions: TelegrafOptions = {
+      telegram: {
+        agent: this.config.useTorProxy
+          ? new SocksProxyAgent({
+              host: '127.0.0.1',
+              port: 9050,
+            })
+          : undefined,
+      },
+    };
+
+    this.bot = new Telegraf<Context>(this.config.botToken, botOptions);
 
     Object.assign(
       this.bot.context,
