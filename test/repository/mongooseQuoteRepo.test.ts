@@ -13,8 +13,9 @@ describe('mongooseRepo', () => {
   Container.configure(...createContainer());
   const repo = Container.get(QuoteRepo);
 
-  before('connect to db', () => {
+  before('connect to db', (done) => {
     repo.connect();
+    done();
   });
   beforeEach(async () => {
     const allDocCount = await repo.getCount();
@@ -22,6 +23,12 @@ describe('mongooseRepo', () => {
       await repo.deleteAll();
     }
     await repo.seed(sampleRecords);
+  });
+
+  it('should get all document in range', async () => {
+    const docs = await repo.getAll({ limit: 7 });
+
+    expect(docs.length).to.be.eq(7);
   });
 
   it('should get all documents count', async () => {
