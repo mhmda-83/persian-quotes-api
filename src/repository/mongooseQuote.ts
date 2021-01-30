@@ -61,7 +61,10 @@ class MongooseQuoteRepo implements QuoteRepo {
     return quote;
   }
 
-  public async getCategories() {
+  public async getCategories(): Promise<{
+    original: string[];
+    translated: string[];
+  }> {
     const translatedAggregationResult = await MongooseQuoteModel.aggregate([
       { $unwind: '$translated.categories' },
       { $group: { _id: '$translated.categories' } },
