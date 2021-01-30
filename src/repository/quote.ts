@@ -9,7 +9,7 @@ abstract class QuoteRepo {
 
   seed: (data: TranslatedQuote[]) => Promise<void>;
 
-  getAll: (options: QueryOptions) => Promise<TranslatedQuote[] | null>;
+  getAll: (options: QueryOptions) => Promise<TranslatedQuote[]>;
 
   getCount: () => Promise<number>;
 
