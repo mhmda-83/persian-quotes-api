@@ -51,7 +51,7 @@ describe('mongooseRepo', () => {
     }
   });
 
-  it('should get records by author', async () => {
+  it('should get document by author', async () => {
     const docs = await repo.getByAuthor(sampleRecords[0].original.author, {
       limit: 1,
     });
