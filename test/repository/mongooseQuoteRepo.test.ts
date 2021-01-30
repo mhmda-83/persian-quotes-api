@@ -33,6 +33,16 @@ describe('mongooseRepo', () => {
     expect(docsCount).to.be.a('number').and.be.eq(sampleRecords.length);
   });
 
+  it('should return random document', async () => {
+    const randomDoc = await repo.getRandom();
+    const foundRandomDoc = sampleRecords.find(
+      (e) => e.original.text === randomDoc?.original.text,
+    );
+    expect(randomDoc?.original)
+      .to.be.an('object')
+      .and.deep.eq(foundRandomDoc?.original);
+  });
+
   it('should get records by author', async () => {
     const docs = await repo.getByAuthor(sampleRecords[0].original.author, {
       limit: 1,
