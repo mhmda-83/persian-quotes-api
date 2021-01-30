@@ -29,8 +29,9 @@ class MongooseQuoteRepo implements QuoteRepo {
 
   public async seed(data: TranslatedQuote[]): Promise<void> {
     const documentsCount = await MongooseQuoteModel.countDocuments();
+
     if (documentsCount === 0) {
-      data.forEach((d) => MongooseQuoteModel.create(d));
+      await MongooseQuoteModel.create(data);
     }
   }
 
@@ -165,7 +166,7 @@ class MongooseQuoteRepo implements QuoteRepo {
   public async getByAuthor(
     author: string,
     options: QueryOptions,
-  ): Promise<TranslatedQuote[] | null> {
+  ): Promise<TranslatedQuote[]> {
     const quotes = await MongooseQuoteModel.find({
       $or: [{ 'translated.author': author }, { 'original.author': author }],
     }).setOptions(options);

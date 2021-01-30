@@ -43,7 +43,7 @@ abstract class QuoteRepo {
   getByAuthor: (
     author: string,
     options: QueryOptions,
-  ) => Promise<TranslatedQuote[] | null>;
+  ) => Promise<TranslatedQuote[]>;
 
   getCountByAuthor: (author: string) => Promise<number>;
 
