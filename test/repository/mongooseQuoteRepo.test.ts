@@ -1,0 +1,41 @@
+import chai, { expect } from 'chai';
+import chaiThings from 'chai-things';
+import { Container } from 'typescript-ioc';
+
+import { sampleRecords } from '../../src/data/seedRecord';
+import QuoteRepo from '../../src/repository/quote';
+import { createContainer } from '../mocks.config';
+
+chai.should();
+chai.use(chaiThings);
+
+describe('mongooseRepo', () => {
+  Container.configure(...createContainer());
+  const repo = Container.get(QuoteRepo);
+
+  before('connect to db', () => {
+    repo.connect();
+  });
+  beforeEach(async () => {
+    const allDocCount = await repo.getCount();
+    if (allDocCount > 0) {
+      await repo.deleteAll();
+    }
+    await repo.seed(sampleRecords);
+  });
+
+  it('should get all documents count', async () => {
+    const docsCount = await repo.getCount();
+    expect(docsCount).to.be.a('number').and.be.eq(sampleRecords.length);
+  });
+
+  it('should get records by author', async () => {
+    const docs = await repo.getByAuthor(sampleRecords[0].original.author, {
+      limit: 1,
+    });
+    docs.should.all.have.nested.property(
+      'original.author',
+      sampleRecords[0].original.author,
+    );
+  });
+});
