@@ -43,6 +43,14 @@ describe('mongooseRepo', () => {
       .and.deep.eq(foundRandomDoc?.original);
   });
 
+  it('should return document by id', async () => {
+    const randomDoc = await repo.getRandom();
+    if (randomDoc?.id) {
+      const doc = await repo.getById(randomDoc?.id);
+      expect(doc).to.be.deep.eq(randomDoc);
+    }
+  });
+
   it('should get records by author', async () => {
     const docs = await repo.getByAuthor(sampleRecords[0].original.author, {
       limit: 1,
