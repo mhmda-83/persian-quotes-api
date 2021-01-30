@@ -10,7 +10,7 @@
     "lint": "eslint \"./**/*.{ts,js}\"",
     "lint:fix": "eslint \"./**/*.{ts,js}\" --quiet --fix",
     "format": "prettier --write \"./**/*.{ts,js,json}\"",
-    "test": "nodemon --watch . --ext ts --exec \"mocha -r ts-node/register test/**/*.test.ts\"",
+    "test": "nodemon --watch . --ext ts --exec \"mocha --timeout 10000 -r ts-node/register test/**/*.test.ts\"",
     "commit": "cz"
   },
   "devDependencies": {
