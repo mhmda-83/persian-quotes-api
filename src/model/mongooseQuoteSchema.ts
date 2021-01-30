@@ -26,10 +26,12 @@ const schema = new mongoose.Schema({
   },
 });
 
-// eslint-disable-next-line prefer-arrow-callback
-schema.post(/(aggregate) | (^find)/, function (docs) {
+//eslint-disable-next-line prefer-arrow-callback
+schema.post(/(aggregate)|(^find)/, function (docs) {
   docs.forEach((doc: any) => {
     doc.id = doc._id;
+    Reflect.deleteProperty(doc, '_id');
+    Reflect.deleteProperty(doc, '__v');
     doc = doc.toObject();
   });
 });
