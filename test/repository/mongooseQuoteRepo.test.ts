@@ -38,9 +38,7 @@ describe('mongooseRepo', () => {
     const foundRandomDoc = sampleRecords.find(
       (e) => e.original.text === randomDoc?.original.text,
     );
-    expect(randomDoc?.original)
-      .to.be.an('object')
-      .and.deep.eq(foundRandomDoc?.original);
+    expect(foundRandomDoc).to.be.an('object').and.deep.eq(foundRandomDoc);
   });
 
   it('should return document by id', async () => {
