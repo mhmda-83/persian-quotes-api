@@ -27,9 +27,10 @@ const schema = new mongoose.Schema({
 });
 
 // eslint-disable-next-line prefer-arrow-callback
-schema.post('aggregate', function (docs) {
-  docs.forEach((doc: { id: any; _id: any }) => {
+schema.post(/(aggregate) | (^find)/, function (docs) {
+  docs.forEach((doc: any) => {
     doc.id = doc._id;
+    doc = doc.toObject();
   });
 });
 
