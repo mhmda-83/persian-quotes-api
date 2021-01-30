@@ -13,15 +13,12 @@ describe('mongooseRepo', () => {
   Container.configure(...createContainer());
   const repo = Container.get(QuoteRepo);
 
-  before('connect to db', (done) => {
+  before('connect to db', () => {
     repo.connect();
-    done();
   });
+
   beforeEach(async () => {
-    const allDocCount = await repo.getCount();
-    if (allDocCount > 0) {
-      await repo.deleteAll();
-    }
+    await repo.deleteAll();
     await repo.seed(sampleRecords);
   });
 

@@ -248,9 +248,7 @@ class MongooseQuoteRepo implements QuoteRepo {
   }
 
   public async deleteAll(): Promise<void> {
-    await mongoose.connection.dropCollection(
-      MongooseQuoteModel.collection.name,
-    );
+    await MongooseQuoteModel.deleteMany({});
   }
 }
 
