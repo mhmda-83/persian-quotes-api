@@ -22,13 +22,13 @@ describe('mongooseRepo', () => {
     await repo.seed(sampleRecords);
   });
 
-  it('should get all document in range', async () => {
+  it('should return all document in range', async () => {
     const docs = await repo.getAll({ limit: 7 });
 
     expect(docs.length).to.be.eq(7);
   });
 
-  it('should get all documents count', async () => {
+  it('should return all documents count', async () => {
     const docsCount = await repo.getCount();
     expect(docsCount).to.be.a('number').and.be.eq(sampleRecords.length);
   });
