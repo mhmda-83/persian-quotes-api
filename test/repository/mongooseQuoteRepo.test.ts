@@ -51,6 +51,22 @@ describe('mongooseRepo', () => {
     }
   });
 
+  it('should return all translated categories', async () => {
+    const allCategories = await repo.getCategories();
+    const uniqueCategories = new Set(
+      sampleRecords.map((e) => e.translated.categories).flat(),
+    );
+    expect(allCategories.translated.length).to.be.eq(uniqueCategories.size);
+  });
+
+  it('should return all original categories', async () => {
+    const allCategories = await repo.getCategories();
+    const uniqueCategories = new Set(
+      sampleRecords.map((e) => e.original.categories).flat(),
+    );
+    expect(allCategories.original.length).to.be.eq(uniqueCategories.size);
+  });
+
   it('should get document by author', async () => {
     const docs = await repo.getByAuthor(sampleRecords[0].original.author, {
       limit: 1,
