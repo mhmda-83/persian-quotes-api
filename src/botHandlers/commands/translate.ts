@@ -10,7 +10,6 @@ const translateHandler: Middleware<Context> = async (ctx) => {
     state: QuoteState.NOT_TRANSLATED,
   });
   if (ctx.session && randomQuote) {
-    ctx.logger.log(randomQuote.id, randomQuote);
     ctx.session.currentQuoteId = randomQuote.id as string;
     ctx.session.state = TranslationProgressState.TEXT;
     ctx.session.userTranslatedQuote = {};

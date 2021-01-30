@@ -63,6 +63,8 @@ abstract class QuoteRepo {
   removeById: (quoteId: string) => Promise<boolean>;
 
   resetById: (quoteId: string) => Promise<TranslatedQuote | null>;
+
+  deleteAll: () => Promise<void>;
 }
 
 export default QuoteRepo;

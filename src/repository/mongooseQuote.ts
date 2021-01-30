@@ -29,7 +29,6 @@ class MongooseQuoteRepo implements QuoteRepo {
 
   public async seed(data: TranslatedQuote[]): Promise<void> {
     const documentsCount = await MongooseQuoteModel.countDocuments();
-    this.logger.log(documentsCount);
     if (documentsCount === 0) {
       data.forEach((d) => MongooseQuoteModel.create(d));
     }
@@ -56,7 +55,7 @@ class MongooseQuoteRepo implements QuoteRepo {
       { $sample: { size: 1 } },
     ]);
 
-    const [quote] = quotes;
+    const [quote = null] = quotes;
 
     return quote;
   }
@@ -236,7 +235,6 @@ class MongooseQuoteRepo implements QuoteRepo {
       { $match: condition },
       { $sample: { size: 1 } },
     ]);
-    this.logger.log(quote);
     return quote;
   }
 
@@ -246,6 +244,12 @@ class MongooseQuoteRepo implements QuoteRepo {
       translated: { categories: [] },
     });
     return reseted;
+  }
+
+  public async deleteAll(): Promise<void> {
+    await mongoose.connection.dropCollection(
+      MongooseQuoteModel.collection.name,
+    );
   }
 }
 

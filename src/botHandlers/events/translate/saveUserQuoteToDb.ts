@@ -9,13 +9,11 @@ export const saveUserQuoteToDb = async (
   if (!ctx.session) return null;
 
   const { currentQuoteId, userTranslatedQuote } = ctx.session;
-  ctx.logger.log(currentQuoteId, userTranslatedQuote);
 
   const quote = await ctx.repo.getById(currentQuoteId);
   if (!quote) {
     return null;
   }
-  ctx.logger.log('quote is here');
 
   const translatedQuote: TranslatedQuote = {
     original: quote?.original,
@@ -27,6 +25,5 @@ export const saveUserQuoteToDb = async (
     translatedQuote,
   );
 
-  ctx.logger.log(savedTranslatedQuote);
   return savedTranslatedQuote;
 };

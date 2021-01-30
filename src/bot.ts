@@ -41,16 +41,16 @@ class TelegrafBot {
     this.bot.telegram.setWebhook(
       `${this.config.baseUrl}/${this.config.webhookPath}`,
     );
-    this.logger.log('bot webhook has been set 🪝');
+    this.logger.info('bot webhook has been set 🪝');
     return this.bot.webhookCallback(this.config.webhookPath);
   }
 
   async launchUsingPooling() {
     try {
       await this.bot.launch();
-      this.logger.log('bot launch successfully  ✅');
+      this.logger.info('bot launch successfully  ✅');
     } catch (err) {
-      this.logger.log('following error occurred ❌:');
+      this.logger.info('following error occurred ❌:');
       this.logger.error(err);
     }
   }
