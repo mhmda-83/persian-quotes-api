@@ -1,0 +1,27 @@
+{
+  "projectName": "persian-quotes-api",
+  "projectOwner": "Mohammad MohammadAlian",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "AmirabbasJ",
+      "name": "AmirabbasJ",
+      "avatar_url": "https://avatars.githubusercontent.com/u/47698362?v=4",
+      "profile": "https://github.com/AmirabbasJ",
+      "contributions": [
+        "code",
+        "review",
+        "content",
+        "data"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}
