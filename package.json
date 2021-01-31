@@ -5,6 +5,9 @@
   "repository": "https://github.com/mhmda-83/persian-quotes-api.git",
   "author": "Mohammad MohammadAlian <mralian.dev@gmail.com>",
   "license": "MIT",
+  "engines": {
+    "node": "15.x"
+  },
   "scripts": {
     "dev": "nodemon src/server.ts",
     "lint": "eslint \"./**/*.{ts,js}\"",
