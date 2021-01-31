@@ -9,7 +9,8 @@
     "node": "15.x"
   },
   "scripts": {
-    "postinstall": "tsc",
+    "postinstall": "yarn build",
+    "build": "tsc",
     "start": "node dist/src/server.js",
     "dev": "nodemon src/server.ts",
     "lint": "eslint \"./**/*.{ts,js}\"",
