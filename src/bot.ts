@@ -8,6 +8,7 @@ import { handlersComposer } from './botHandlers';
 import { Config, Logger } from './config';
 import { Context, CustomContextProps } from './infra/bot/context';
 
+// TODO: add log for each failure (like null returns)
 class TelegrafBot {
   private bot: Telegraf<Context>;
   @Inject logger: Logger;
