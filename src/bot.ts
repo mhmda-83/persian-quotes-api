@@ -39,11 +39,12 @@ class TelegrafBot {
   }
 
   lunchUsingWebhook() {
-    this.bot.telegram.setWebhook(
-      `${this.config.baseUrl}/${this.config.webhookPath}`,
-    );
-    this.logger.info('bot webhook has been set 🪝');
-    return this.bot.webhookCallback(this.config.webhookPath);
+    this.bot.telegram
+      .setWebhook(`${this.config.baseUrl}/${this.config.webhookPath}`)
+      .then(() => {
+        this.logger.info('bot webhook has been set 🪝');
+      });
+    return this.bot.webhookCallback(`/${this.config.webhookPath}`);
   }
 
   async launchUsingPooling() {
