@@ -11,7 +11,7 @@
   "scripts": {
     "postinstall": "yarn build",
     "build": "tsc",
-    "start": "node dist/src/server.js",
+    "start": "node dist/server.js",
     "dev": "nodemon src/server.ts",
     "lint": "eslint \"./**/*.{ts,js}\"",
     "lint:fix": "eslint \"./**/*.{ts,js}\" --quiet --fix",
