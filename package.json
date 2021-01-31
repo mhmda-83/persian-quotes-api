@@ -28,6 +28,7 @@
     "@types/node": "14.14.22",
     "@typescript-eslint/eslint-plugin": "4.14.0",
     "@typescript-eslint/parser": "4.14.0",
+    "all-contributors-cli": "6.19.0",
     "commitizen": "4.2.3",
     "commitlint": "11.0.0",
     "cz-conventional-changelog": "3.3.0",
