@@ -18,13 +18,14 @@ const translationVerification: Middleware<Context> = async (ctx) => {
       ctx.editMessageText(
         'با موفقیت ثبت شد 🎉\n\nاین پیام بعد از ۵ ثانیه پاک میشود',
       );
-    ctx.editMessageText('خطایی رخ داد');
+    else ctx.editMessageText('خطایی رخ داد');
   } else {
     const resetedDoc = await ctx.repo.resetById(docId);
     if (resetedDoc)
       ctx.editMessageText(
         'با موفقیت پاک شد 🎉\n\nاین پیام بعد از ۵ ثانیه پاک میشود',
       );
+    else ctx.editMessageText('خطایی رخ داد');
   }
   return setTimeout(() => {
     ctx.deleteMessage();
