@@ -32,7 +32,9 @@
         "code",
         "ideas",
         "fundingFinding",
-        "maintenance"
+        "maintenance",
+        "test",
+        "infra"
       ]
     }
   ],
