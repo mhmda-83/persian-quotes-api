@@ -19,6 +19,7 @@
         "code",
         "test",
         "infra",
+        "maintenance",
         "ideas"
       ]
     },
@@ -30,7 +31,8 @@
       "contributions": [
         "code",
         "ideas",
-        "fundingFinding"
+        "fundingFinding",
+        "maintenance"
       ]
     }
   ],
