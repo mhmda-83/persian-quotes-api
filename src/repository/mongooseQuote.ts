@@ -43,6 +43,7 @@ class MongooseQuoteRepo implements QuoteRepo {
       {
         $match: {
           'translated.author': authorName,
+          state: QuoteState.VERIFIED,
         },
       },
       { $sample: { size: 1 } },
@@ -59,7 +60,10 @@ class MongooseQuoteRepo implements QuoteRepo {
   ): Promise<Quote[]> {
     const quotes: MongooseQuoteDoc[] = await MongooseQuoteModel.find({
       'translated.author': authorName,
-    }).setOptions(options);
+      state: QuoteState.VERIFIED,
+    })
+      .setOptions(options)
+      .lean();
 
     return quotes.map<Quote>(QuoteMapper.toDomain);
   }
@@ -69,7 +73,10 @@ class MongooseQuoteRepo implements QuoteRepo {
   ): Promise<Quote | null> {
     const quotes: MongooseQuoteDoc[] = await MongooseQuoteModel.aggregate([
       {
-        $match: { 'translated.categories': categoryName },
+        $match: {
+          'translated.categories': categoryName,
+          state: QuoteState.VERIFIED,
+        },
       },
       { $sample: { size: 1 } },
     ]);
@@ -83,9 +90,12 @@ class MongooseQuoteRepo implements QuoteRepo {
     categoryName: string,
     options: QueryOptions,
   ): Promise<Quote[]> {
-    const quotes = await MongooseQuoteModel.find({
+    const quotes: MongooseQuoteDoc[] = await MongooseQuoteModel.find({
       'translated.categories': categoryName,
-    }).setOptions(options);
+      state: QuoteState.VERIFIED,
+    })
+      .setOptions(options)
+      .lean();
 
     return quotes.map<Quote>(QuoteMapper.toDomain);
   }
@@ -95,7 +105,10 @@ class MongooseQuoteRepo implements QuoteRepo {
   ): Promise<number> {
     const count = await MongooseQuoteModel.find({
       'translated.categories': categoryName,
-    }).countDocuments();
+      state: QuoteState.VERIFIED,
+    })
+      .countDocuments()
+      .lean();
 
     return count;
   }
@@ -103,7 +116,9 @@ class MongooseQuoteRepo implements QuoteRepo {
   public async getAllTranslated(options: QueryOptions): Promise<Quote[]> {
     const quotes: MongooseQuoteDoc[] = await MongooseQuoteModel.find({
       state: QuoteState.VERIFIED,
-    }).setOptions(options);
+    })
+      .setOptions(options)
+      .lean();
 
     return quotes.map<Quote>(QuoteMapper.toDomain);
   }
@@ -138,7 +153,9 @@ class MongooseQuoteRepo implements QuoteRepo {
   }
 
   public async getById(id: string): Promise<Quote | null> {
-    const quote = await MongooseQuoteModel.findById(id);
+    const quote: MongooseQuoteDoc = await MongooseQuoteModel.findById(
+      id,
+    ).lean();
     return QuoteMapper.toDomain(quote);
   }
 
@@ -173,7 +190,10 @@ class MongooseQuoteRepo implements QuoteRepo {
   public async getTranslatedCountByAuthor(author: string): Promise<number> {
     const count = await MongooseQuoteModel.find({
       'translated.author': author,
-    }).countDocuments();
+      state: QuoteState.VERIFIED,
+    })
+      .countDocuments()
+      .lean();
 
     return count;
   }
