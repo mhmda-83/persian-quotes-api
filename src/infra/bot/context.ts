@@ -3,13 +3,13 @@ import { TelegrafContext } from 'telegraf-ts';
 import { Inject, InjectValue } from 'typescript-ioc';
 
 import { BotState } from '../../data/botStates';
-import { Quote } from '../../model/quote';
+import { TranslatedQuote } from '../../model/quote';
 import QuoteRepo from '../../repository/quote';
 import { Logger } from '../logger';
 
 interface TelegrafSession {
   state: BotState;
-  userTranslatedQuote: Partial<Quote>;
+  userTranslatedQuote: TranslatedQuote;
   currentQuoteId: string;
 }
 interface Context extends TelegrafContext {

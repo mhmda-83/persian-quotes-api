@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import axios, { AxiosInstance } from 'axios';
 
-import { Quote } from '../model/quote';
+import { OriginalQuote } from '../model/quote';
 
 interface QuotableQuote {
   author: string;
@@ -10,7 +10,7 @@ interface QuotableQuote {
   _id: string;
 }
 
-interface QuoteApiQuote extends Quote {
+interface QuoteApiQuote extends OriginalQuote {
   id: string;
 }
 

@@ -4,7 +4,7 @@ import { Inject } from 'typescript-ioc';
 import { TelegrafBot } from './bot';
 import { getConfig } from './config';
 import { Logger } from './infra/logger';
-import { TranslatedQuote } from './model/translatedQuote';
+import { Quote } from './model/quote';
 import QuoteRepo from './repository/quote';
 import authorRouter from './routers/author';
 import categoryRouter from './routers/category';
@@ -22,7 +22,7 @@ class ExpressApp {
     this.app = express();
   }
 
-  public async init({ seedingData }: { seedingData?: TranslatedQuote[] }) {
+  public async init({ seedingData }: { seedingData?: Quote[] }) {
     this.repo.connect();
     if (seedingData) await this.repo.seed(seedingData);
 

@@ -1,4 +1,4 @@
-import { TranslatedQuote } from '../model/translatedQuote';
+import { Quote } from '../model/quote';
 
 export interface QueryOptions {
   limit?: number;
@@ -7,15 +7,15 @@ export interface QueryOptions {
 abstract class QuoteRepo {
   connect: () => void;
 
-  seed: (data: TranslatedQuote[]) => Promise<void>;
+  seed: (data: Quote[]) => Promise<void>;
 
-  getAll: (options: QueryOptions) => Promise<TranslatedQuote[]>;
+  getAll: (options: QueryOptions) => Promise<Quote[]>;
 
   getCount: () => Promise<number>;
 
-  getById: (id: string) => Promise<TranslatedQuote | null>;
+  getById: (id: string) => Promise<Quote | null>;
 
-  getRandom: () => Promise<TranslatedQuote | null>;
+  getRandom: () => Promise<Quote | null>;
 
   getCategories: () => Promise<{
     original: string[];
@@ -27,11 +27,11 @@ abstract class QuoteRepo {
   getByCategory: (
     category: string,
     options: QueryOptions,
-  ) => Promise<TranslatedQuote[] | null>;
+  ) => Promise<Quote[] | null>;
 
   getCountByCategory: (category: string) => Promise<number>;
 
-  getRandomByCategory: (category: string) => Promise<TranslatedQuote | null>;
+  getRandomByCategory: (category: string) => Promise<Quote | null>;
 
   getAuthors: () => Promise<{
     original: string[];
@@ -40,29 +40,24 @@ abstract class QuoteRepo {
 
   getAuthorsCount: () => Promise<number>;
 
-  getByAuthor: (
-    author: string,
-    options: QueryOptions,
-  ) => Promise<TranslatedQuote[]>;
+  getByAuthor: (author: string, options: QueryOptions) => Promise<Quote[]>;
 
   getCountByAuthor: (author: string) => Promise<number>;
 
-  getRandomByAuthor: (author: string) => Promise<TranslatedQuote | null>;
+  getRandomByAuthor: (author: string) => Promise<Quote | null>;
 
-  getRandomByField: (
-    condition: Partial<TranslatedQuote>,
-  ) => Promise<TranslatedQuote | null>;
+  getRandomByField: (condition: Partial<Quote>) => Promise<Quote | null>;
 
-  insertOne: (quote: TranslatedQuote) => Promise<TranslatedQuote | null>;
+  insertOne: (quote: Quote) => Promise<Quote | null>;
 
   updateById: (
     quoteId: string,
-    newQuote: Partial<TranslatedQuote>,
-  ) => Promise<TranslatedQuote | null>;
+    newQuote: Partial<Quote>,
+  ) => Promise<Quote | null>;
 
   removeById: (quoteId: string) => Promise<boolean>;
 
-  resetById: (quoteId: string) => Promise<TranslatedQuote | null>;
+  resetById: (quoteId: string) => Promise<Quote | null>;
 
   deleteAll: () => Promise<void>;
 }

@@ -1,11 +1,10 @@
 import { QuoteState } from '../../../data/quote';
 import { Context } from '../../../infra/bot/context';
-import { Quote } from '../../../model/quote';
-import { TranslatedQuote } from '../../../model/translatedQuote';
+import { Quote, TranslatedQuote } from '../../../model/quote';
 
 export const saveUserQuoteToDb = async (
   ctx: Context,
-): Promise<TranslatedQuote | null> => {
+): Promise<Quote | null> => {
   if (!ctx.session) return null;
 
   const { currentQuoteId, userTranslatedQuote } = ctx.session;
@@ -15,9 +14,9 @@ export const saveUserQuoteToDb = async (
     return null;
   }
 
-  const translatedQuote: TranslatedQuote = {
+  const translatedQuote: Quote = {
     original: quote?.original,
-    translated: userTranslatedQuote as Quote,
+    translated: userTranslatedQuote as TranslatedQuote,
     state: QuoteState.NOT_VERIFIED,
   };
   const savedTranslatedQuote = await ctx.repo.updateById(

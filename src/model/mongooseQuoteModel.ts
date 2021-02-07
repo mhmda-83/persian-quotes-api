@@ -1,9 +1,9 @@
 import mongoose, { Document } from 'mongoose';
 
 import schema from './mongooseQuoteSchema';
-import { TranslatedQuote } from './translatedQuote';
+import { Quote } from './quote';
 
-export interface MongooseQuoteDoc extends TranslatedQuote, Document {
+export interface MongooseQuoteDoc extends Quote, Document {
   id: string;
 }
 

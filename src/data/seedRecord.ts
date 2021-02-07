@@ -1,7 +1,7 @@
-import { TranslatedQuote } from '../model/translatedQuote';
+import { Quote } from '../model/quote';
 import { QuoteState } from './quote';
 
-const sampleRecords: TranslatedQuote[] = [
+const sampleRecords: Quote[] = [
   {
     original: {
       author: 'Ann Patchett,  Bel Canto',

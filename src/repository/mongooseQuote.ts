@@ -6,7 +6,7 @@ import { QuoteState } from '../data/quote';
 import MongooseQuoteModel, {
   MongooseQuoteDoc,
 } from '../model/mongooseQuoteModel';
-import { TranslatedQuote } from '../model/translatedQuote';
+import { Quote } from '../model/quote';
 import QuoteRepo, { QueryOptions } from './quote';
 
 class MongooseQuoteRepo implements QuoteRepo {
@@ -27,7 +27,7 @@ class MongooseQuoteRepo implements QuoteRepo {
       .catch(this.logger.error);
   }
 
-  public async seed(data: TranslatedQuote[]): Promise<void> {
+  public async seed(data: Quote[]): Promise<void> {
     const documentsCount = await MongooseQuoteModel.countDocuments();
 
     if (documentsCount === 0) {
@@ -35,7 +35,7 @@ class MongooseQuoteRepo implements QuoteRepo {
     }
   }
 
-  public async getAll(options: QueryOptions): Promise<TranslatedQuote[]> {
+  public async getAll(options: QueryOptions): Promise<Quote[]> {
     const quotes = await MongooseQuoteModel.find().setOptions(options);
     return quotes;
   }
@@ -46,12 +46,12 @@ class MongooseQuoteRepo implements QuoteRepo {
     return count;
   }
 
-  public async getById(id: string): Promise<TranslatedQuote | null> {
+  public async getById(id: string): Promise<Quote | null> {
     const quote = await MongooseQuoteModel.findById(id);
     return quote;
   }
 
-  public async getRandom(): Promise<TranslatedQuote | null> {
+  public async getRandom(): Promise<Quote | null> {
     const quotes: MongooseQuoteDoc[] = await MongooseQuoteModel.aggregate([
       { $sample: { size: 1 } },
     ]);
@@ -98,7 +98,7 @@ class MongooseQuoteRepo implements QuoteRepo {
   public async getByCategory(
     category: string,
     options: QueryOptions,
-  ): Promise<TranslatedQuote[] | null> {
+  ): Promise<Quote[] | null> {
     const quotes = await MongooseQuoteModel.find({
       $or: [
         { 'translated.categories': category },
@@ -120,9 +120,7 @@ class MongooseQuoteRepo implements QuoteRepo {
     return count;
   }
 
-  public async getRandomByCategory(
-    category: string,
-  ): Promise<TranslatedQuote | null> {
+  public async getRandomByCategory(category: string): Promise<Quote | null> {
     const quotes: MongooseQuoteDoc[] = await MongooseQuoteModel.aggregate([
       {
         $match: {
@@ -169,7 +167,7 @@ class MongooseQuoteRepo implements QuoteRepo {
   public async getByAuthor(
     author: string,
     options: QueryOptions,
-  ): Promise<TranslatedQuote[]> {
+  ): Promise<Quote[]> {
     const quotes = await MongooseQuoteModel.find({
       $or: [{ 'translated.author': author }, { 'original.author': author }],
     }).setOptions(options);
@@ -185,9 +183,7 @@ class MongooseQuoteRepo implements QuoteRepo {
     return count;
   }
 
-  public async getRandomByAuthor(
-    author: string,
-  ): Promise<TranslatedQuote | null> {
+  public async getRandomByAuthor(author: string): Promise<Quote | null> {
     const quotes: MongooseQuoteDoc[] = await MongooseQuoteModel.aggregate([
       {
         $match: {
@@ -202,9 +198,7 @@ class MongooseQuoteRepo implements QuoteRepo {
     return quote;
   }
 
-  public async insertOne(
-    quote: TranslatedQuote,
-  ): Promise<TranslatedQuote | null> {
+  public async insertOne(quote: Quote): Promise<Quote | null> {
     const insertedQuote = await MongooseQuoteModel.create(quote);
 
     return insertedQuote;
@@ -212,7 +206,7 @@ class MongooseQuoteRepo implements QuoteRepo {
 
   public async updateById(
     quoteId: string,
-    newQuote: Partial<TranslatedQuote>,
+    newQuote: Partial<Quote>,
   ): Promise<MongooseQuoteDoc | null> {
     const updatedQuote = await MongooseQuoteModel.findByIdAndUpdate(
       quoteId,
@@ -233,8 +227,8 @@ class MongooseQuoteRepo implements QuoteRepo {
   }
 
   public async getRandomByField(
-    condition: Partial<TranslatedQuote>,
-  ): Promise<TranslatedQuote | null> {
+    condition: Partial<Quote>,
+  ): Promise<Quote | null> {
     const [quote] = await MongooseQuoteModel.aggregate([
       { $match: condition },
       { $sample: { size: 1 } },
@@ -242,7 +236,7 @@ class MongooseQuoteRepo implements QuoteRepo {
     return quote;
   }
 
-  public async resetById(docId: string): Promise<TranslatedQuote | null> {
+  public async resetById(docId: string): Promise<Quote | null> {
     const reseted = await this.updateById(docId, {
       state: QuoteState.NOT_TRANSLATED,
       translated: { categories: [] },
