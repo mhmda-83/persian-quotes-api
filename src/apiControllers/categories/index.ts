@@ -9,7 +9,7 @@ const PAGE_SIZE = 50;
 export const getAll = async (req: Request, res: Response) => {
   const categories = await MongooseQuoteRepo.getCategories();
 
-  res.json({ categories, totalCount: categories.translated.length });
+  res.json({ categories, totalCount: categories.length });
 };
 
 export const getRandom = async (req: Request, res: Response) => {

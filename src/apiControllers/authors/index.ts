@@ -9,12 +9,10 @@ const PAGE_SIZE = 50;
 export const getAll = async (req: Request, res: Response) => {
   const authors = await MongooseQuoteRepo.getAuthors();
 
-  res.json({ authors, totalCount: authors.translated.length });
+  res.json({ authors, totalCount: authors.length });
 };
 
 export const getRandom = async (req: Request, res: Response) => {
-  console.log(req.params.authorName);
-
   const quote = await MongooseQuoteRepo.getRandomTranslatedByAuthor(
     req.params.authorName,
   );
