@@ -222,7 +222,7 @@ class MongooseQuoteRepo implements QuoteRepo {
     return QuoteMapper.toDomain(quote);
   }
 
-  public async resetById(docId: string): Promise<Quote | null> {
+  public async resetToUntranslatedById(docId: string): Promise<Quote | null> {
     const reseted = await this.updateById(docId, {
       state: QuoteState.NOT_TRANSLATED,
       translated: { categories: [] },

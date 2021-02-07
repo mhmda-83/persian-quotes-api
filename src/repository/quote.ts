@@ -43,7 +43,7 @@ abstract class QuoteRepo {
     newQuote: Partial<Quote>,
   ) => Promise<Quote | null>;
 
-  resetById: (quoteId: string) => Promise<Quote | null>;
+  resetToUntranslatedById: (quoteId: string) => Promise<Quote | null>;
 
   deleteAll: () => Promise<void>;
 }

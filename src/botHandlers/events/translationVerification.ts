@@ -20,7 +20,7 @@ const translationVerification: Middleware<Context> = async (ctx) => {
       );
     else ctx.editMessageText('خطایی رخ داد');
   } else {
-    const resetedDoc = await ctx.repo.resetById(docId);
+    const resetedDoc = await ctx.repo.resetToUntranslatedById(docId);
     if (resetedDoc)
       ctx.editMessageText(
         'با موفقیت پاک شد 🎉\n\nاین پیام بعد از ۵ ثانیه پاک میشود',
