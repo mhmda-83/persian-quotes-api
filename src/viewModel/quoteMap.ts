@@ -1,11 +1,11 @@
-import { OriginalQuote, TranslatedQuote } from '../model/quote';
+import { UntranslatedQuote, TranslatedQuote } from '../model/quote';
 
 const QuoteMap = {
   toView({
     text = 'خالی',
     author = 'خالی',
     categories = ['خالی'],
-  }: Partial<OriginalQuote> = {}) {
+  }: Partial<UntranslatedQuote> = {}) {
     const mappedCats = categories.map((c) => `#${c}`).join(' ');
     return `${text}\n\n—${author}\n${mappedCats}`;
   },
@@ -14,7 +14,7 @@ const QuoteMap = {
     original,
     translated,
   }: {
-    original: Partial<OriginalQuote>;
+    original: Partial<UntranslatedQuote>;
     translated: TranslatedQuote;
   }) {
     return (

@@ -1,6 +1,6 @@
 import { QuoteState } from '../data/quote';
 
-export interface OriginalQuote {
+export interface UntranslatedQuote {
   text: string;
   categories: string[];
   author: string;
@@ -14,7 +14,7 @@ export interface TranslatedQuote {
 
 export interface Quote {
   id?: string;
-  original: OriginalQuote;
+  original: UntranslatedQuote;
   translated: TranslatedQuote;
   state: QuoteState;
 }
