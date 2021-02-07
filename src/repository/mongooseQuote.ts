@@ -49,7 +49,7 @@ class MongooseQuoteRepo implements QuoteRepo {
     ]);
 
     const [quote = null] = quotes;
-    console.log(quote);
+
     return QuoteMapper.toDomain(quote);
   }
 
@@ -148,9 +148,9 @@ class MongooseQuoteRepo implements QuoteRepo {
       { $group: { _id: '$translated.categories' } },
     ]);
 
-    let translatedCategories: string[] = translatedAggregationResult.map(
-      (aggregateResult) => aggregateResult._id,
-    );
+    let translatedCategories: string[] = translatedAggregationResult
+      .map((aggregateResult) => aggregateResult._id)
+      .flat();
 
     translatedCategories = Array.from(new Set(translatedCategories));
 
