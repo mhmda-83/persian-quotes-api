@@ -13,8 +13,6 @@ abstract class QuoteRepo {
 
   getAllTranslatedByAuthor: (authorName: string, options: QueryOptions) => void;
 
-  getCountByTranslatedAuthor: (authorName: string) => void;
-
   getRandomTranslatedByCategory: (categoryName: string) => void;
 
   getTranslatedByCategory: (
@@ -32,51 +30,18 @@ abstract class QuoteRepo {
 
   getRandomTranslated: () => void;
 
-  getAll: (options: QueryOptions) => Promise<Quote[]>;
-
-  getCount: () => Promise<number>;
-
   getById: (id: string) => Promise<Quote | null>;
 
-  getRandom: () => Promise<Quote | null>;
+  getCategories: () => Promise<string[]>;
 
-  getCategories: () => Promise<{
-    original: string[];
-    translated: string[];
-  }>;
-
-  getCategoriesCount: () => Promise<number>;
-
-  getByCategory: (
-    category: string,
-    options: QueryOptions,
-  ) => Promise<Quote[] | null>;
-
-  getCountByCategory: (category: string) => Promise<number>;
-
-  getRandomByCategory: (category: string) => Promise<Quote | null>;
-
-  getAuthors: () => Promise<{
-    original: string[];
-    translated: string[];
-  }>;
-
-  getAuthorsCount: () => Promise<number>;
-
-  getByAuthor: (author: string, options: QueryOptions) => Promise<Quote[]>;
-
-  getRandomByAuthor: (author: string) => Promise<Quote | null>;
+  getAuthors: () => Promise<string[]>;
 
   getRandomByField: (condition: Partial<Quote>) => Promise<Quote | null>;
-
-  insertOne: (quote: Quote) => Promise<Quote | null>;
 
   updateById: (
     quoteId: string,
     newQuote: Partial<Quote>,
   ) => Promise<Quote | null>;
-
-  removeById: (quoteId: string) => Promise<boolean>;
 
   resetById: (quoteId: string) => Promise<Quote | null>;
 
