@@ -36,7 +36,7 @@ abstract class QuoteRepo {
 
   getAuthors: () => Promise<string[]>;
 
-  getRandomByField: (condition: Partial<Quote>) => Promise<Quote | null>;
+  getRandomUntranslated: () => Promise<Quote | null>;
 
   updateById: (
     quoteId: string,

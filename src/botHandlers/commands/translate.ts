@@ -1,14 +1,11 @@
 import { Middleware } from 'telegraf-ts';
 
 import { TranslationProgressState } from '../../data/botStates';
-import { QuoteState } from '../../data/quote';
 import { Context } from '../../infra/bot/context';
 import { QuoteMap } from '../../viewModel/quoteMap';
 
 const translateHandler: Middleware<Context> = async (ctx) => {
-  const randomQuote = await ctx.repo.getRandomByField({
-    state: QuoteState.NOT_TRANSLATED,
-  });
+  const randomQuote = await ctx.repo.getRandomUntranslated();
   if (ctx.session && randomQuote) {
     ctx.session.currentQuoteId = randomQuote.id as string;
     ctx.session.state = TranslationProgressState.TEXT;

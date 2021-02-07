@@ -210,11 +210,13 @@ class MongooseQuoteRepo implements QuoteRepo {
     return QuoteMapper.toDomain(quote);
   }
 
-  public async getRandomByField(
-    condition: Partial<Quote>,
-  ): Promise<Quote | null> {
+  public async getRandomUntranslated(): Promise<Quote | null> {
     const [quote = null] = await MongooseQuoteModel.aggregate([
-      { $match: condition },
+      {
+        $match: {
+          state: QuoteState.NOT_TRANSLATED,
+        },
+      },
       { $sample: { size: 1 } },
     ]);
     return QuoteMapper.toDomain(quote);
