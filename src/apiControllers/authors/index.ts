@@ -13,7 +13,9 @@ export const getAll = async (req: Request, res: Response) => {
 };
 
 export const getRandom = async (req: Request, res: Response) => {
-  const quote = await MongooseQuoteRepo.getRandomByAuthor(
+  console.log(req.params.authorName);
+
+  const quote = await MongooseQuoteRepo.getRandomTranslatedByAuthor(
     req.params.authorName,
   );
 
@@ -24,12 +26,15 @@ export const getQuotesByAuthorName = async (req: Request, res: Response) => {
   const parsedPage = parseInt(req.query.page as string, 10);
   const page: number = isNaN(parsedPage) ? 1 : parsedPage;
 
-  const quotes = await MongooseQuoteRepo.getByAuthor(req.params.authorName, {
-    skip: (page - 1) * PAGE_SIZE,
-    limit: PAGE_SIZE,
-  });
+  const quotes = await MongooseQuoteRepo.getAllTranslatedByAuthor(
+    req.params.authorName,
+    {
+      skip: (page - 1) * PAGE_SIZE,
+      limit: PAGE_SIZE,
+    },
+  );
 
-  const quotesCount = await MongooseQuoteRepo.getCountByAuthor(
+  const quotesCount = await MongooseQuoteRepo.getTranslatedCountByAuthor(
     req.params.authorName,
   );
 

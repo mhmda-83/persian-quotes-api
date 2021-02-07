@@ -9,6 +9,29 @@ abstract class QuoteRepo {
 
   seed: (data: Quote[]) => Promise<void>;
 
+  getRandomTranslatedByAuthor: (authorName: string) => void;
+
+  getAllTranslatedByAuthor: (authorName: string, options: QueryOptions) => void;
+
+  getCountByTranslatedAuthor: (authorName: string) => void;
+
+  getRandomTranslatedByCategory: (categoryName: string) => void;
+
+  getTranslatedByCategory: (
+    categoryName: string,
+    options: QueryOptions,
+  ) => void;
+
+  getTranslatedCountByCategory: (categoryName: string) => void;
+
+  getAllTranslated: (options: QueryOptions) => void;
+
+  getAllTranslatedCount: () => void;
+
+  getTranslatedById: (id: string) => void;
+
+  getRandomTranslated: () => void;
+
   getAll: (options: QueryOptions) => Promise<Quote[]>;
 
   getCount: () => Promise<number>;
@@ -41,8 +64,6 @@ abstract class QuoteRepo {
   getAuthorsCount: () => Promise<number>;
 
   getByAuthor: (author: string, options: QueryOptions) => Promise<Quote[]>;
-
-  getCountByAuthor: (author: string) => Promise<number>;
 
   getRandomByAuthor: (author: string) => Promise<Quote | null>;
 

@@ -3,6 +3,7 @@ import { Inject, InjectValue } from 'typescript-ioc';
 
 import { Config, Logger } from '../config';
 import { QuoteState } from '../data/quote';
+import { QuoteMapper } from '../mapper/quoteMapper';
 import MongooseQuoteModel, {
   MongooseQuoteDoc,
 } from '../model/mongooseQuoteModel';
@@ -35,9 +36,118 @@ class MongooseQuoteRepo implements QuoteRepo {
     }
   }
 
+  public async getRandomTranslatedByAuthor(
+    authorName: string,
+  ): Promise<Quote | null> {
+    const quotes: MongooseQuoteDoc[] = await MongooseQuoteModel.aggregate([
+      {
+        $match: {
+          'translated.author': authorName,
+        },
+      },
+      { $sample: { size: 1 } },
+    ]);
+
+    const [quote = null] = quotes;
+    console.log(quote);
+    return QuoteMapper.toDomain(quote);
+  }
+
+  public async getAllTranslatedByAuthor(
+    authorName: string,
+    options: QueryOptions,
+  ): Promise<Quote[]> {
+    const quotes: MongooseQuoteDoc[] = await MongooseQuoteModel.find({
+      'translated.author': authorName,
+    }).setOptions(options);
+
+    return quotes.map<Quote>(QuoteMapper.toDomain);
+  }
+
+  public async getCountByTranslatedAuthor(authorName: string): Promise<number> {
+    const count = await MongooseQuoteModel.find({
+      'translated.author': authorName,
+    }).countDocuments();
+
+    return count;
+  }
+
+  public async getRandomTranslatedByCategory(
+    categoryName: string,
+  ): Promise<Quote | null> {
+    const quotes: MongooseQuoteDoc[] = await MongooseQuoteModel.aggregate([
+      {
+        $match: { 'translated.categories': categoryName },
+      },
+      { $sample: { size: 1 } },
+    ]);
+
+    const [quote = null] = quotes;
+
+    return QuoteMapper.toDomain(quote);
+  }
+
+  public async getTranslatedByCategory(
+    categoryName: string,
+    options: QueryOptions,
+  ): Promise<Quote[]> {
+    const quotes = await MongooseQuoteModel.find({
+      'translated.categories': categoryName,
+    }).setOptions(options);
+
+    return quotes.map<Quote>(QuoteMapper.toDomain);
+  }
+
+  public async getTranslatedCountByCategory(
+    categoryName: string,
+  ): Promise<number> {
+    const count = await MongooseQuoteModel.find({
+      'translated.categories': categoryName,
+    }).countDocuments();
+
+    return count;
+  }
+
+  public async getAllTranslated(options: QueryOptions): Promise<Quote[]> {
+    const quotes: MongooseQuoteDoc[] = await MongooseQuoteModel.find({
+      state: QuoteState.VERIFIED,
+    }).setOptions(options);
+
+    return quotes.map<Quote>(QuoteMapper.toDomain);
+  }
+
+  public async getAllTranslatedCount(): Promise<number> {
+    const count = await MongooseQuoteModel.find({
+      state: QuoteState.VERIFIED,
+    })
+      .countDocuments()
+      .lean();
+    return count;
+  }
+
+  public async getTranslatedById(id: string): Promise<Quote | null> {
+    const quote: MongooseQuoteDoc = await MongooseQuoteModel.findOne({
+      _id: id,
+      state: QuoteState.VERIFIED,
+    }).lean();
+
+    return QuoteMapper.toDomain(quote);
+  }
+
+  public async getRandomTranslated(): Promise<Quote | null> {
+    const quotes: MongooseQuoteDoc[] = await MongooseQuoteModel.aggregate([
+      { $match: { state: QuoteState.VERIFIED } },
+      { $sample: { size: 1 } },
+    ]);
+
+    const [quote = null] = quotes;
+
+    return QuoteMapper.toDomain(quote);
+  }
+
   public async getAll(options: QueryOptions): Promise<Quote[]> {
     const quotes = await MongooseQuoteModel.find().setOptions(options);
-    return quotes;
+    return quotes.map<Quote>(QuoteMapper.toDomain);
   }
 
   public async getCount(): Promise<number> {
@@ -48,7 +158,7 @@ class MongooseQuoteRepo implements QuoteRepo {
 
   public async getById(id: string): Promise<Quote | null> {
     const quote = await MongooseQuoteModel.findById(id);
-    return quote;
+    return QuoteMapper.toDomain(quote);
   }
 
   public async getRandom(): Promise<Quote | null> {
@@ -58,7 +168,7 @@ class MongooseQuoteRepo implements QuoteRepo {
 
     const [quote = null] = quotes;
 
-    return quote;
+    return QuoteMapper.toDomain(quote);
   }
 
   public async getCategories(): Promise<{
@@ -106,7 +216,7 @@ class MongooseQuoteRepo implements QuoteRepo {
       ],
     }).setOptions(options);
 
-    return quotes;
+    return quotes.map<Quote>(QuoteMapper.toDomain);
   }
 
   public async getCountByCategory(category: string): Promise<number> {
@@ -135,7 +245,7 @@ class MongooseQuoteRepo implements QuoteRepo {
 
     const [quote] = quotes;
 
-    return quote;
+    return QuoteMapper.toDomain(quote);
   }
 
   public async getAuthors() {
@@ -172,12 +282,12 @@ class MongooseQuoteRepo implements QuoteRepo {
       $or: [{ 'translated.author': author }, { 'original.author': author }],
     }).setOptions(options);
 
-    return quotes;
+    return quotes.map<Quote>(QuoteMapper.toDomain);
   }
 
-  public async getCountByAuthor(author: string): Promise<number> {
+  public async getTranslatedCountByAuthor(author: string): Promise<number> {
     const count = await MongooseQuoteModel.find({
-      $or: [{ 'translated.author': author }, { 'original.author': author }],
+      'translated.author': author,
     }).countDocuments();
 
     return count;
@@ -195,45 +305,42 @@ class MongooseQuoteRepo implements QuoteRepo {
 
     const [quote] = quotes;
 
-    return quote;
+    return QuoteMapper.toDomain(quote);
   }
 
   public async insertOne(quote: Quote): Promise<Quote | null> {
     const insertedQuote = await MongooseQuoteModel.create(quote);
 
-    return insertedQuote;
+    return QuoteMapper.toDomain(insertedQuote);
   }
 
   public async updateById(
     quoteId: string,
     newQuote: Partial<Quote>,
-  ): Promise<MongooseQuoteDoc | null> {
-    const updatedQuote = await MongooseQuoteModel.findByIdAndUpdate(
+  ): Promise<Quote | null> {
+    const quote = await MongooseQuoteModel.findByIdAndUpdate(
       quoteId,
       newQuote,
       { returnOriginal: false, useFindAndModify: false },
     );
-    return updatedQuote;
+    return QuoteMapper.toDomain(quote);
   }
 
   public async removeById(quoteId: string): Promise<boolean> {
     const removedDoc = await MongooseQuoteModel.findByIdAndRemove(quoteId, {
       useFindAndModify: false,
     });
-    if (removedDoc) {
-      return true;
-    }
-    return false;
+    return Boolean(removedDoc);
   }
 
   public async getRandomByField(
     condition: Partial<Quote>,
   ): Promise<Quote | null> {
-    const [quote] = await MongooseQuoteModel.aggregate([
+    const [quote = null] = await MongooseQuoteModel.aggregate([
       { $match: condition },
       { $sample: { size: 1 } },
     ]);
-    return quote;
+    return QuoteMapper.toDomain(quote);
   }
 
   public async resetById(docId: string): Promise<Quote | null> {

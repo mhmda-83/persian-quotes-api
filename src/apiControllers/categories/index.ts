@@ -13,7 +13,7 @@ export const getAll = async (req: Request, res: Response) => {
 };
 
 export const getRandom = async (req: Request, res: Response) => {
-  const quote = await MongooseQuoteRepo.getRandomByCategory(
+  const quote = await MongooseQuoteRepo.getRandomTranslatedByCategory(
     req.params.categoryName,
   );
 
@@ -24,7 +24,7 @@ export const getQuotesByCategoryName = async (req: Request, res: Response) => {
   const parsedPage = parseInt(req.query.page as string, 10);
   const page: number = isNaN(parsedPage) ? 1 : parsedPage;
 
-  const quotes = await MongooseQuoteRepo.getByCategory(
+  const quotes = await MongooseQuoteRepo.getTranslatedByCategory(
     req.params.categoryName,
     {
       skip: (page - 1) * PAGE_SIZE,
@@ -32,7 +32,7 @@ export const getQuotesByCategoryName = async (req: Request, res: Response) => {
     },
   );
 
-  const quotesCount = await MongooseQuoteRepo.getCountByCategory(
+  const quotesCount = await MongooseQuoteRepo.getTranslatedCountByCategory(
     req.params.categoryName,
   );
 
