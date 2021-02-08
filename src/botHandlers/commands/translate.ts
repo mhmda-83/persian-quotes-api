@@ -11,11 +11,12 @@ const translateHandler: Middleware<Context> = async (ctx) => {
     ctx.session.state = TranslationProgressState.TEXT;
     ctx.session.userTranslatedQuote = {};
     await ctx.reply(QuoteMapper.toView(randomQuote.original));
-    ctx.reply(
+    return ctx.reply(
       'این نقل قول به انگلیسی بود حالا متن اش رو به فارسی برام بفرست (فعلا فقط متنش)\n\n' +
         'اگر از ین نقل قول خوشت نمیاد یک بار دیگه /translate رو برام بفرست.',
     );
   }
+  return ctx.logger.log('no random quote was present or session was null');
 };
 
 export { translateHandler };

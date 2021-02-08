@@ -6,7 +6,7 @@ import { Context } from '../../infra/bot/context';
 
 const translationVerification: Middleware<Context> = async (ctx) => {
   const data = ctx.callbackQuery?.data;
-  if (data == null) return null;
+  if (data == null) return ctx.logger.log('callback query was null');
 
   const [state, docId] = data.split('-');
 

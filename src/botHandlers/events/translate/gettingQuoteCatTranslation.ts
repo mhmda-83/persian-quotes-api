@@ -2,7 +2,7 @@ import { DefaultState } from '../../../data/botStates';
 import { Context } from '../../../infra/bot/context';
 
 export const gettingQuoteCatTranslation = (ctx: Context) => {
-  if (!ctx.session) return null;
+  if (!ctx.session) return ctx.logger.log('session was null');
 
   const { userTranslatedQuote } = ctx.session;
 

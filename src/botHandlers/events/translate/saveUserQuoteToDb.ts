@@ -10,6 +10,7 @@ export const saveUserQuoteToDb = async (
   const { currentQuoteId, userTranslatedQuote } = ctx.session;
 
   const quote = await ctx.repo.getById(currentQuoteId);
+
   if (!quote) {
     return null;
   }

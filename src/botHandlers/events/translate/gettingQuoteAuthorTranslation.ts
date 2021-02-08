@@ -2,7 +2,7 @@ import { TranslationProgressState } from '../../../data/botStates';
 import { Context } from '../../../infra/bot/context';
 
 export const gettingQuoteAuthorTranslation = (ctx: Context) => {
-  if (!ctx.session) return null;
+  if (!ctx.session) return ctx.logger.log('session was null');
 
   ctx.session.userTranslatedQuote.author = ctx.message?.text;
   ctx.session.state = TranslationProgressState.CATEGORIES;
