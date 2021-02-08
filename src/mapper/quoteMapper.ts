@@ -1,5 +1,5 @@
 import { MongooseQuoteDoc } from '../model/mongooseQuoteModel';
-import { Quote } from '../model/quote';
+import { Quote, TranslatedQuote, UntranslatedQuote } from '../model/quote';
 
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 class QuoteMapper {
@@ -17,6 +17,29 @@ class QuoteMapper {
       translated: quote.translated,
       state: quote.state,
     };
+  }
+
+  public static toView({
+    text = 'خالی',
+    author = 'خالی',
+    categories = ['خالی'],
+  }: Partial<UntranslatedQuote> = {}) {
+    const mappedCats = categories.map((c) => `#${c}`).join(' ');
+    return `${text}\n\n—${author}\n${mappedCats}`;
+  }
+
+  public static translationView({
+    original,
+    translated,
+  }: {
+    original: UntranslatedQuote;
+    translated: TranslatedQuote;
+  }) {
+    return (
+      `${QuoteMapper.toView(original)}\n` +
+      `ترجمه شد به\n\n` +
+      `${QuoteMapper.toView(translated)}`
+    );
   }
 }
 

@@ -2,8 +2,8 @@ import { Markup } from 'telegraf-ts';
 
 import { TranslationState } from '../../../data/botStates';
 import { Context } from '../../../infra/bot/context';
+import { QuoteMapper } from '../../../mapper/quoteMapper';
 import { Quote } from '../../../model/quote';
-import { QuoteMap } from '../../../viewModel/quoteMap';
 
 export const sendUserQuoteToAdmins = (
   ctx: Context,
@@ -11,7 +11,7 @@ export const sendUserQuoteToAdmins = (
 ): void => {
   ctx.session = null;
   const { id, translated, original } = savedTranslatedQuote;
-  const translatedView = QuoteMap.translationView({
+  const translatedView = QuoteMapper.translationView({
     original,
     translated,
   });
