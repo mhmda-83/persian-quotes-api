@@ -4,8 +4,10 @@ import { DefaultState } from '../../data/botStates';
 import { Context } from '../../infra/bot/context';
 
 const startHandler: Middleware<Context> = (ctx) => {
-  if (ctx.session) ctx.session.state = DefaultState.NONE;
-  ctx.reply(
+  if (!ctx.session) return ctx.logger.log('session is null null');
+
+  ctx.session.state = DefaultState.NONE;
+  return ctx.reply(
     'سلام 👋🏻\n\n' +
       'به ربات ثبت ترجمه ی نقل قول خوش آمدی 🤖\n' +
       'برای ترجمه /translate رو ارسال کن تا برات یک نقل و قول بصورت رندوم بفرستم\n\n' +
