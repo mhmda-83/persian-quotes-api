@@ -33,6 +33,7 @@ class TelegrafBot {
       this.bot.context,
       Reflect.getPrototypeOf(this.telegrafContextProps),
     );
+    this.bot.context.destroySession = this.telegrafContextProps.destroySession;
 
     this.bot.use(handlersComposer);
     this.bot.use(new RedisSession({ store: this.config.redisUrl }));

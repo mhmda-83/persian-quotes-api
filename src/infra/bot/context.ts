@@ -25,7 +25,7 @@ abstract class CustomContextProps {
   public logger: Logger;
   public session: TelegrafSession | null;
   public adminChannelId: number;
-  destroySession: () => void;
+  public destroySession: () => void;
 }
 
 class CustomContextPropsImp implements CustomContextProps {
