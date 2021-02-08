@@ -11,20 +11,22 @@ import { sendUserQuoteToAdmins } from './sendUserQuoteToAdmins';
 const translateHandler: Middleware<Context> = async (ctx) => {
   switch (ctx.session?.state) {
     case TranslationProgressState.TEXT:
-      gettingQuoteTextTranslation(ctx);
-      break;
+      return gettingQuoteTextTranslation(ctx);
+
     case TranslationProgressState.AUTHOR:
-      gettingQuoteAuthorTranslation(ctx);
-      break;
+      return gettingQuoteAuthorTranslation(ctx);
+
     case TranslationProgressState.CATEGORIES: {
       gettingQuoteCatTranslation(ctx);
       const savedQuote = await saveUserQuoteToDb(ctx);
-      if (savedQuote) sendUserQuoteToAdmins(ctx, savedQuote);
-      break;
+      if (savedQuote == null) {
+        return ctx.logger.log('savedQuote or session was null');
+      }
+      return sendUserQuoteToAdmins(ctx, savedQuote);
     }
+
     default:
-      ctx.reply("hmm...this wasn't implemented in my source code 🤔");
-      break;
+      return ctx.reply("hmm...this wasn't implemented in my source code 🤔");
   }
 };
 
