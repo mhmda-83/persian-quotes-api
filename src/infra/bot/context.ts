@@ -17,19 +17,24 @@ interface Context extends TelegrafContext {
   logger: Logger;
   session: TelegrafSession | null;
   adminChannelId: number;
+  destroySession: () => void;
 }
 
 abstract class CustomContextProps {
-  public logger: Logger;
   public repo: QuoteRepo;
-  public session: TelegrafSession;
+  public logger: Logger;
+  public session: TelegrafSession | null;
   public adminChannelId: number;
+  destroySession: () => void;
 }
 
 class CustomContextPropsImp implements CustomContextProps {
   @Inject public logger: Logger;
   @Inject public repo: QuoteRepo;
-  @Inject public session: TelegrafSession;
+  public session: TelegrafSession | null;
   @InjectValue('config.adminChannelId') public adminChannelId: number;
+  public destroySession(): void {
+    this.session = null;
+  }
 }
 export { Context, CustomContextProps, CustomContextPropsImp, TelegrafSession };

@@ -9,7 +9,8 @@ export const sendUserQuoteToAdmins = (
   ctx: Context,
   savedTranslatedQuote: Quote,
 ): void => {
-  ctx.session = null;
+  ctx.destroySession();
+
   const { id, translated, original } = savedTranslatedQuote;
   const translatedView = QuoteMapper.translationView({
     original,
