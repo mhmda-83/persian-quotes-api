@@ -26,7 +26,7 @@ const translateHandler: Middleware<Context> = async (ctx) => {
     }
 
     default:
-      return ctx.reply("hmm...this wasn't implemented in my source code 🤔");
+      return ctx.reply('هممم....این توی سورس کد من پیاده نشده بود 🤔');
   }
 };
 
