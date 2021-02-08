@@ -9,5 +9,5 @@ export const gettingQuoteCatTranslation = (ctx: Context) => {
   userTranslatedQuote.categories = ctx.message?.text?.split(' ');
   ctx.session.state = DefaultState.NONE;
 
-  return ctx.reply('\nممنون که در توسعه این API مشارکت کردید ♥♥');
+  return ctx.reply('\nممنون که در توسعه این API مشارکت کردید ❤');
 };
