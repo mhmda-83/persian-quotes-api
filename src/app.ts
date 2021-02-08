@@ -29,6 +29,8 @@ class ExpressApp {
     this.app.use('/api/v1/quotes', quoteRouter);
     this.app.use('/api/v1/categories', categoryRouter);
     this.app.use('/api/v1/authors', authorRouter);
+
+    process.on('unhandledRejection', () => this.logger.error);
   }
 
   public listen() {
