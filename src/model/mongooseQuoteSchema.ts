@@ -26,19 +26,4 @@ const schema = new mongoose.Schema({
   },
 });
 
-// TODO: add mappers
-
-schema.post('aggregate', (docs) => {
-  docs.forEach((doc: { id: any; _id: any; __v: any }) => {
-    doc.id = doc._id;
-    Reflect.deleteProperty(doc, '__v');
-  });
-});
-
-// schema.post('init', (doc) => {
-//   doc._doc.id = doc._id;
-//   Reflect.deleteProperty(doc._doc, '__v');
-//   Reflect.deleteProperty(doc._doc, '_id');
-// });
-
 export default schema;
