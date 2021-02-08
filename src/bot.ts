@@ -44,6 +44,10 @@ class TelegrafBot {
       .setWebhook(`${this.config.baseUrl}/${this.config.webhookPath}`)
       .then(() => {
         this.logger.info('bot webhook has been set 🪝');
+      })
+      .catch((err) => {
+        this.logger.info('following error occurred while launching bot ❌:');
+        this.logger.error(err);
       });
     return this.bot.webhookCallback(`/${this.config.webhookPath}`);
   }
@@ -51,9 +55,10 @@ class TelegrafBot {
   async launchUsingPooling() {
     try {
       await this.bot.launch();
-      this.logger.info('bot launch successfully  ✅');
+      this.logger.info('bot started using pooling 🐢');
+      this.logger.info('bot launch successfully 🤖');
     } catch (err) {
-      this.logger.info('following error occurred ❌:');
+      this.logger.info('following error occurred while launching bot ❌:');
       this.logger.error(err);
     }
   }

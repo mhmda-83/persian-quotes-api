@@ -23,9 +23,14 @@ class MongooseQuoteRepo implements QuoteRepo {
         useUnifiedTopology: true,
       })
       .then(() => {
-        this.logger.info('Database Connected :)');
+        this.logger.info('connected to database successfully ⚙');
       })
-      .catch(this.logger.error);
+      .catch((err) => {
+        this.logger.info(
+          'following error occurred while connecting to database ❌:',
+        );
+        this.logger.error(err);
+      });
   }
 
   public async seed(data: Quote[]): Promise<void> {

@@ -38,7 +38,7 @@ class ExpressApp {
     else this.bot.launchUsingPooling();
 
     this.app.listen(config.port, () => {
-      this.logger.info(`Server Started on Port ${config.port}`);
+      this.logger.info(`app listening on port ${config.port} 👂`);
     });
   }
 }
