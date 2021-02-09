@@ -44,6 +44,7 @@ class TelegrafBot {
       .setWebhook(`${this.config.baseUrl}/${this.config.webhookPath}`)
       .then(() => {
         this.logger.info('bot webhook has been set 🪝');
+        this.logger.info('bot launch successfully 🤖');
       })
       .catch((err) => {
         this.logger.info('following error occurred while launching bot ❌:');
