@@ -31,8 +31,9 @@ abstract class CustomContextProps {
 class CustomContextPropsImp implements CustomContextProps {
   @Inject public logger: Logger;
   @Inject public repo: QuoteRepo;
-  @Inject public session: TelegrafSession | null;
   @InjectValue('config.adminChannelId') public adminChannelId: number;
+
+  public session: TelegrafSession | null;
   public destroySession(): void {
     this.session = null;
   }

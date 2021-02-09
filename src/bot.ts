@@ -35,8 +35,8 @@ class TelegrafBot {
     );
     this.bot.context.destroySession = this.telegrafContextProps.destroySession;
 
-    this.bot.use(handlersComposer);
     this.bot.use(new RedisSession({ store: this.config.redisUrl }));
+    this.bot.use(handlersComposer);
   }
 
   lunchUsingWebhook() {
