@@ -6,6 +6,7 @@ import {
   CustomContextPropsImp,
 } from '../infra/bot/context';
 import { ConsoleLogger } from '../infra/logger';
+import { MongooseContributorRepo } from '../repository/mongooseContributor';
 import MongooseQuoteRepo from '../repository/mongooseQuote';
 import QuoteRepo from '../repository/quote';
 import { QuoteApi } from '../services/quoteApi';
@@ -18,6 +19,7 @@ export function createContainer(): ContainerConfig {
     { bindName: 'config', to: getConfig() },
     { bind: Logger, to: ConsoleLogger },
     { bind: QuoteRepo, to: MongooseQuoteRepo },
+    { bind: MongooseContributorRepo, to: MongooseQuoteRepo },
     { bind: QuoteApi, to: QuoteApi },
     { bind: CustomContextProps, to: CustomContextPropsImp },
     { bind: TelegrafBot, to: TelegrafBot },
