@@ -7,7 +7,7 @@ import {
 } from '../infra/bot/context';
 import { ConsoleLogger } from '../infra/logger';
 import { ContributorRepo } from '../repository/contributorRepo';
-import { MongooseContributorRepo } from '../repository/mongooseContributor';
+import { MongooseContributorRepo } from '../repository/mongooseContributorRepo';
 import MongooseQuoteRepo from '../repository/mongooseQuote';
 import QuoteRepo from '../repository/quote';
 import { QuoteApi } from '../services/quoteApi';
