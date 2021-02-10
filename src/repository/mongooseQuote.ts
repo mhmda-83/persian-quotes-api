@@ -8,7 +8,8 @@ import MongooseQuoteModel, {
   MongooseQuoteDoc,
 } from '../model/mongooseQuoteModel';
 import { Quote } from '../model/quote';
-import QuoteRepo, { QueryOptions } from './quote';
+import { QueryOptions } from './queryOptions';
+import QuoteRepo from './quote';
 
 class MongooseQuoteRepo implements QuoteRepo {
   @Inject private logger: Logger;

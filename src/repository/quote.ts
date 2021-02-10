@@ -1,9 +1,7 @@
+import { QueryOptions } from 'mongoose';
+
 import { Quote } from '../model/quote';
 
-export interface QueryOptions {
-  limit?: number;
-  skip?: number;
-}
 abstract class QuoteRepo {
   connect: () => void;
 
