@@ -14,7 +14,7 @@ const translateHandler: Middleware<Context> = async (ctx) => {
     return ctx.reply(
       'این نقل قول به انگلیسی بود حالا متن اش رو به فارسی برام بفرست\n\n' +
         'توجه داشته باشید که ترجمه در چند مرحله می شه، در این مرحله متن رو برام بفرست.' +
-        'اگر از ین نقل قول خوشت نمیاد یک بار دیگه /translate رو برام بفرست.',
+        'اگر از این نقل قول خوشت نمیاد یک بار دیگه /translate رو برام بفرست.',
     );
   }
   return ctx.logger.log('no random quote was present or session was null');
