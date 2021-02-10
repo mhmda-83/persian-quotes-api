@@ -21,6 +21,5 @@
     "strictPropertyInitialization": false,
     "typeRoots": ["./src/@types/", "./node_modules/@types/"]
   },
-  "include": ["src/**/*"],
-  "exclude": ["test/**/*"]
+  "include": ["src/**/*", "test/**/*"]
 }
