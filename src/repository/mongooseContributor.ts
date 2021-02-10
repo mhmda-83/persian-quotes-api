@@ -43,6 +43,18 @@ class MongooseContributorRepo implements ContributorRepo {
     return ContributorMapper.toDomain(contributor);
   }
 
+  async incrementContributionCountByTelegramId(
+    telegramId: string,
+  ): Promise<Contributor | null> {
+    const updatedContributor: MongooseContributorDoc = await MongooseContributorModel.findOneAndUpdate(
+      { telegramId },
+      { $inc: { contributionCount: 1 } },
+      { returnOriginal: false },
+    ).lean();
+
+    return ContributorMapper.toDomain(updatedContributor);
+  }
+
   async insertOne(contributor: Contributor): Promise<Contributor> {
     const insertedContributor = await MongooseContributorModel.create(
       contributor,

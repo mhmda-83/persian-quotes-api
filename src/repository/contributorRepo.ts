@@ -5,6 +5,10 @@ abstract class ContributorRepo {
   connect: () => void;
   getByTelegramId: (telegramId: string) => Promise<Contributor | null>;
   insertOne: (contributor: Contributor) => Promise<Contributor>;
+  incrementContributionCountByTelegramId: (
+    telegramId: string,
+  ) => Promise<Contributor | null>;
+
   getAll: (options: QueryOptions) => Promise<Contributor[]>;
 }
 
