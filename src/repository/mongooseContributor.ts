@@ -63,6 +63,10 @@ class MongooseContributorRepo implements ContributorRepo {
   }
 
   getAll: (options: QueryOptions) => Promise<Contributor[]>;
+
+  public async deleteAll(): Promise<void> {
+    await MongooseContributorModel.deleteMany({});
+  }
 }
 
 export { MongooseContributorRepo };

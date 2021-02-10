@@ -10,6 +10,7 @@ abstract class ContributorRepo {
   ) => Promise<Contributor | null>;
 
   getAll: (options: QueryOptions) => Promise<Contributor[]>;
+  deleteAll: () => Promise<void>;
 }
 
 export { ContributorRepo };
