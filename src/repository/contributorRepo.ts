@@ -3,6 +3,7 @@ import { QueryOptions } from './queryOptions';
 
 abstract class ContributorRepo {
   connect: () => void;
+  seed: (data: Contributor[]) => Promise<void>;
   getByTelegramId: (telegramId: string) => Promise<Contributor | null>;
   insertOne: (contributor: Contributor) => Promise<Contributor>;
   incrementContributionCountByTelegramId: (

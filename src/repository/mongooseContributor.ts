@@ -34,6 +34,14 @@ class MongooseContributorRepo implements ContributorRepo {
       });
   }
 
+  async seed(data: Contributor[]): Promise<void> {
+    const documentsCount = await MongooseContributorModel.countDocuments();
+
+    if (documentsCount === 0) {
+      await MongooseContributorModel.create(data);
+    }
+  }
+
   async getByTelegramId(telegramId: string): Promise<Contributor | null> {
     const contributor: MongooseContributorDoc = await MongooseContributorModel.findOne(
       {
