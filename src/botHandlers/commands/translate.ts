@@ -12,7 +12,8 @@ const translateHandler: Middleware<Context> = async (ctx) => {
     ctx.session.userTranslatedQuote = {};
     await ctx.reply(QuoteMapper.toView(randomQuote.original));
     return ctx.reply(
-      'این نقل قول به انگلیسی بود حالا متن اش رو به فارسی برام بفرست (فعلا فقط متنش)\n\n' +
+      'این نقل قول به انگلیسی بود حالا متن اش رو به فارسی برام بفرست\n\n' +
+        'توجه داشته باشید که ترجمه در چند مرحله می شه، در این مرحله متن رو برام بفرست.' +
         'اگر از ین نقل قول خوشت نمیاد یک بار دیگه /translate رو برام بفرست.',
     );
   }
