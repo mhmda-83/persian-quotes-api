@@ -5,7 +5,7 @@ import { Context } from '../../infra/bot/context';
 import { QuoteMapper } from '../../mapper/quoteMapper';
 
 const translateHandler: Middleware<Context> = async (ctx) => {
-  const randomQuote = await ctx.repo.getRandomUntranslated();
+  const randomQuote = await ctx.quoteRepo.getRandomUntranslated();
   if (ctx.session && randomQuote) {
     ctx.session.currentQuoteId = randomQuote.id as string;
     ctx.session.state = TranslationProgressState.TEXT;

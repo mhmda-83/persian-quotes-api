@@ -9,7 +9,7 @@ export const saveUserQuoteToDb = async (
 
   const { currentQuoteId, userTranslatedQuote } = ctx.session;
 
-  const quote = await ctx.repo.getById(currentQuoteId);
+  const quote = await ctx.quoteRepo.getById(currentQuoteId);
 
   if (!quote) {
     return null;
@@ -20,7 +20,7 @@ export const saveUserQuoteToDb = async (
     translated: userTranslatedQuote as TranslatedQuote,
     state: QuoteState.NOT_VERIFIED,
   };
-  const savedTranslatedQuote = await ctx.repo.updateById(
+  const savedTranslatedQuote = await ctx.quoteRepo.updateById(
     currentQuoteId,
     translatedQuote,
   );

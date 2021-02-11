@@ -11,7 +11,7 @@ const translationVerification: Middleware<Context> = async (ctx) => {
   const [state, docId] = data.split('-');
 
   if (state === TranslationState.VERIFIED) {
-    const updatedDoc = await ctx.repo.updateById(docId, {
+    const updatedDoc = await ctx.quoteRepo.updateById(docId, {
       state: QuoteState.VERIFIED,
     });
     if (updatedDoc)
@@ -20,7 +20,7 @@ const translationVerification: Middleware<Context> = async (ctx) => {
       );
     else ctx.editMessageText('خطایی رخ داد');
   } else {
-    const resetedDoc = await ctx.repo.resetToUntranslatedById(docId);
+    const resetedDoc = await ctx.quoteRepo.resetToUntranslatedById(docId);
     if (resetedDoc)
       ctx.editMessageText(
         'با موفقیت پاک شد 🎉\n\nاین پیام بعد از ۵ ثانیه پاک میشود',

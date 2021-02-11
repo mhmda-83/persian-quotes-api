@@ -13,7 +13,7 @@ interface TelegrafSession {
   currentQuoteId: string;
 }
 interface Context extends TelegrafContext {
-  repo: QuoteRepo;
+  quoteRepo: QuoteRepo;
   logger: Logger;
   session: TelegrafSession | null;
   adminChannelId: number;
@@ -21,7 +21,7 @@ interface Context extends TelegrafContext {
 }
 
 abstract class CustomContextProps {
-  public repo: QuoteRepo;
+  public quoteRepo: QuoteRepo;
   public logger: Logger;
   public session: TelegrafSession | null;
   public adminChannelId: number;
@@ -30,7 +30,7 @@ abstract class CustomContextProps {
 
 class CustomContextPropsImp implements CustomContextProps {
   @Inject public logger: Logger;
-  @Inject public repo: QuoteRepo;
+  @Inject public quoteRepo: QuoteRepo;
   @InjectValue('config.adminChannelId') public adminChannelId: number;
 
   public session: TelegrafSession | null;
