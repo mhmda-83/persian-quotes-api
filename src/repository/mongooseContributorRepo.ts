@@ -57,7 +57,7 @@ class MongooseContributorRepo implements ContributorRepo {
     const updatedContributor: MongooseContributorDoc = await MongooseContributorModel.findOneAndUpdate(
       { telegramId },
       { $inc: { contributionCount: 1 } },
-      { returnOriginal: false },
+      { new: true },
     ).lean();
 
     return ContributorMapper.toDomain(updatedContributor);
