@@ -211,7 +211,7 @@ class MongooseQuoteRepo implements QuoteRepo {
     const quote = await MongooseQuoteModel.findByIdAndUpdate(
       quoteId,
       newQuote,
-      { returnOriginal: false, useFindAndModify: false },
+      { new: true, useFindAndModify: false },
     );
     return QuoteMapper.toDomain(quote);
   }
