@@ -29,4 +29,14 @@ describe('mongooseContributorRepo', () => {
       .to.be.a('number')
       .and.eq(sample.contributionCount);
   });
+
+  it('should return incremented contributionCount document by telegramId', async () => {
+    const sample = contributorSamples[2];
+    const doc = await repo.incrementContributionCountByTelegramId(
+      sample.telegramId,
+    );
+    expect(doc?.contributionCount)
+      .to.be.a('number')
+      .and.eq(sample.contributionCount + 1);
+  });
 });
