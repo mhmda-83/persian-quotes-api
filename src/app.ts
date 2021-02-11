@@ -5,7 +5,7 @@ import { TelegrafBot } from './bot';
 import { getConfig } from './config';
 import { Logger } from './infra/logger';
 import { Quote } from './model/quote';
-import QuoteRepo from './repository/quote';
+import QuoteRepo from './repository/quoteRepo';
 import authorRouter from './routers/author';
 import categoryRouter from './routers/category';
 import quoteRouter from './routers/quote';

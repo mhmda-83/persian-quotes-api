@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import mongooseQuoteRepo from '../../repository/mongooseQuote';
+import mongooseQuoteRepo from '../../repository/mongooseQuoteRepo';
 
 const MongooseQuoteRepo = new mongooseQuoteRepo();
 

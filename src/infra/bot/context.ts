@@ -4,7 +4,7 @@ import { Inject, InjectValue } from 'typescript-ioc';
 
 import { BotState } from '../../data/botStates';
 import { TranslatedQuote } from '../../model/quote';
-import QuoteRepo from '../../repository/quote';
+import QuoteRepo from '../../repository/quoteRepo';
 import { Logger } from '../logger';
 
 interface TelegrafSession {

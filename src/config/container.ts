@@ -8,8 +8,8 @@ import {
 import { ConsoleLogger } from '../infra/logger';
 import { ContributorRepo } from '../repository/contributorRepo';
 import { MongooseContributorRepo } from '../repository/mongooseContributorRepo';
-import MongooseQuoteRepo from '../repository/mongooseQuote';
-import QuoteRepo from '../repository/quote';
+import MongooseQuoteRepo from '../repository/mongooseQuoteRepo';
+import QuoteRepo from '../repository/quoteRepo';
 import { QuoteApi } from '../services/quoteApi';
 import { getConfig, Logger } from '.';
 

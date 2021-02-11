@@ -4,8 +4,8 @@ import { Logger } from '../src/config';
 import { ConsoleLogger } from '../src/infra/logger';
 import { ContributorRepo } from '../src/repository/contributorRepo';
 import { MongooseContributorRepo } from '../src/repository/mongooseContributorRepo';
-import MongooseQuoteRepo from '../src/repository/mongooseQuote';
-import QuoteRepo from '../src/repository/quote';
+import MongooseQuoteRepo from '../src/repository/mongooseQuoteRepo';
+import QuoteRepo from '../src/repository/quoteRepo';
 
 type ContainerConfig = (ConstantConfiguration | ContainerConfiguration)[];
 
