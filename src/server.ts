@@ -2,7 +2,7 @@ import { Container } from 'typescript-ioc';
 
 import { ExpressApp } from './app';
 import { createContainer } from './config/container';
-import { sampleRecords } from './data/seedRecord';
+import { sampleRecords } from './data/quoteSamples';
 
 Container.configure(...createContainer());
 
