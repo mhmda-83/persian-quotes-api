@@ -20,7 +20,7 @@ class MongooseContributorRepo implements ContributorRepo {
       .connect(this.config.databaseUrl, {
         useNewUrlParser: true,
         useCreateIndex: true,
-        useFindAndModify: true,
+        useFindAndModify: false,
         useUnifiedTopology: true,
       })
       .then(() => {
@@ -57,7 +57,7 @@ class MongooseContributorRepo implements ContributorRepo {
     const updatedContributor: MongooseContributorDoc = await MongooseContributorModel.findOneAndUpdate(
       { telegramId },
       { $inc: { contributionCount: 1 } },
-      { useFindAndModify: true, new: true },
+      { useFindAndModify: false, new: true },
     ).lean();
 
     return ContributorMapper.toDomain(updatedContributor);
