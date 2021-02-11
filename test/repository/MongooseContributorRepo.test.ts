@@ -47,4 +47,9 @@ describe('mongooseContributorRepo', () => {
     const doc = await repo.getByTelegramId(sample.telegramId);
     expect(insertedDoc).deep.eq(doc);
   });
+
+  it('should return the first 3 document', async () => {
+    const docs = await repo.getAll({ limit: 3 });
+    expect(docs.length).to.be.a('number').and.eq(3);
+  });
 });
