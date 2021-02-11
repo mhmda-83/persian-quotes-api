@@ -4,6 +4,7 @@ import { Inject, InjectValue } from 'typescript-ioc';
 
 import { BotState } from '../../data/botStates';
 import { TranslatedQuote } from '../../model/quote';
+import { ContributorRepo } from '../../repository/contributorRepo';
 import QuoteRepo from '../../repository/quoteRepo';
 import { Logger } from '../logger';
 
@@ -14,6 +15,7 @@ interface TelegrafSession {
 }
 interface Context extends TelegrafContext {
   quoteRepo: QuoteRepo;
+  contributorRepo: ContributorRepo;
   logger: Logger;
   session: TelegrafSession | null;
   adminChannelId: number;
@@ -22,6 +24,7 @@ interface Context extends TelegrafContext {
 
 abstract class CustomContextProps {
   public quoteRepo: QuoteRepo;
+  public contributorRepo: ContributorRepo;
   public logger: Logger;
   public session: TelegrafSession | null;
   public adminChannelId: number;
@@ -31,6 +34,8 @@ abstract class CustomContextProps {
 class CustomContextPropsImp implements CustomContextProps {
   @Inject public logger: Logger;
   @Inject public quoteRepo: QuoteRepo;
+  @Inject public contributorRepo: ContributorRepo;
+
   @InjectValue('config.adminChannelId') public adminChannelId: number;
 
   public session: TelegrafSession | null;
