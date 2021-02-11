@@ -5,6 +5,7 @@ import { Context } from '../../../infra/bot/context';
 import { gettingQuoteAuthorTranslation } from './gettingQuoteAuthorTranslation';
 import { gettingQuoteCatTranslation } from './gettingQuoteCatTranslation';
 import { gettingQuoteTextTranslation } from './gettingQuoteTextTranslation';
+import { saveUserContribution } from './saveUserContribution';
 import { saveUserQuoteToDb } from './saveUserQuoteToDb';
 import { sendUserQuoteToAdmins } from './sendUserQuoteToAdmins';
 
@@ -18,6 +19,7 @@ const translateHandler: Middleware<Context> = async (ctx) => {
 
     case TranslationProgressState.CATEGORIES: {
       gettingQuoteCatTranslation(ctx);
+      await saveUserContribution(ctx);
       const savedQuote = await saveUserQuoteToDb(ctx);
       if (savedQuote == null) {
         return ctx.logger.log('savedQuote or session was null');
