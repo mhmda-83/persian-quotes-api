@@ -52,4 +52,9 @@ describe('mongooseContributorRepo', () => {
     const docs = await repo.getAll({ limit: 3 });
     expect(docs.length).to.be.a('number').and.eq(3);
   });
+
+  it('should return all documents count', async () => {
+    const docs = await repo.getAll({ limit: contributorSamples.length });
+    expect(docs.length).to.be.a('number').and.eq(contributorSamples.length);
+  });
 });
