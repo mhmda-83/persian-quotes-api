@@ -39,4 +39,12 @@ describe('mongooseContributorRepo', () => {
       .to.be.a('number')
       .and.eq(sample.contributionCount + 1);
   });
+
+  it('should insert one and return it', async () => {
+    await repo.deleteAll();
+    const sample = contributorSamples[4];
+    const insertedDoc = await repo.insertOne(sample);
+    const doc = await repo.getByTelegramId(sample.telegramId);
+    expect(insertedDoc).deep.eq(doc);
+  });
 });
