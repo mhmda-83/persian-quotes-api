@@ -70,7 +70,15 @@ class MongooseContributorRepo implements ContributorRepo {
     return ContributorMapper.toDomain(insertedContributor);
   }
 
-  getAll: (options: QueryOptions) => Promise<Contributor[]>;
+  async getAll(options: QueryOptions): Promise<Contributor[]> {
+    const docs: MongooseContributorDoc[] = await MongooseContributorModel.find(
+      {},
+    )
+      .setOptions(options)
+      .lean();
+
+    return docs.map<Contributor>(ContributorMapper.toDomain);
+  }
 
   public async deleteAll(): Promise<void> {
     await MongooseContributorModel.deleteMany({});
