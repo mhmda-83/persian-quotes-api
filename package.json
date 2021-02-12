@@ -10,7 +10,7 @@
   },
   "scripts": {
     "postinstall": "yarn build",
-    "build": "tsc",
+    "build": "tsc --p tsconfig.build.json",
     "start": "node dist/server.js",
     "dev": "nodemon src/server.ts",
     "lint": "eslint \"./**/*.{ts,js}\"",
