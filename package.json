@@ -6,7 +6,7 @@
   "author": "Mohammad MohammadAlian <mralian.dev@gmail.com>",
   "license": "MIT",
   "engines": {
-    "node": "15.x"
+    "node": "14.x"
   },
   "scripts": {
     "postinstall": "yarn build",
