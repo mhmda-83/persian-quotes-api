@@ -1,4 +1,7 @@
 import express, { Express } from 'express';
+import mongoSanitize from 'express-mongo-sanitize';
+import rateLimit from 'express-rate-limit';
+import hpp from 'hpp';
 import { Inject } from 'typescript-ioc';
 
 import { TelegrafBot } from './bot';
@@ -25,6 +28,21 @@ class ExpressApp {
   public async init({ seedingData }: { seedingData?: Quote[] }) {
     this.repo.connect();
     if (seedingData) await this.repo.seed(seedingData);
+
+    if (config.isProduction) {
+      this.app.use(hpp());
+      this.app.use(mongoSanitize());
+      this.app.use(
+        rateLimit({
+          max: 5,
+          handler: (_: express.Request, res: express.Response) => {
+            res
+              .status(429)
+              .json({ message: 'Too many requests, please try again later.' });
+          },
+        }),
+      );
+    }
 
     this.app.use('/api/v1/quotes', quoteRouter);
     this.app.use('/api/v1/categories', categoryRouter);
