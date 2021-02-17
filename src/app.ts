@@ -34,7 +34,7 @@ class ExpressApp {
       this.app.use(mongoSanitize());
       this.app.use(
         rateLimit({
-          max: 5,
+          max: 60,
           handler: (_: express.Request, res: express.Response) => {
             res
               .status(429)
